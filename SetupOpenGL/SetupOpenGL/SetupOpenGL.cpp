@@ -2,6 +2,7 @@
 #include <glad/glad.h>
 #include <SDL.h>
 #include "stb_image.h"
+#include <glm/glm.hpp>
 
 int main(int argc, char **argv)
 {
