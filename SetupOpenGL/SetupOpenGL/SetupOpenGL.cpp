@@ -89,6 +89,9 @@ int main(int argc, char **argv)
 		out vec3 Color;
 		out vec2 TexCoord;
 
+		uniform vec2 spriteSheetSize;
+		uniform int frameIndex;
+
 		void main()
 		{
 			Color = color;
@@ -263,7 +266,15 @@ int main(int argc, char **argv)
 	float lastTime = SDL_GetTicks();
 	int frameIndex = 0;
 
-	glm::vec2 spriteSheetSize = glm::vec2(4.0f, 4.0f);
+
+	GLuint spriteSheetSizeLocation = glGetUniformLocation(shaderProgram, "spriteSheetSize");
+	GLuint frameIndexLocation = glGetUniformLocation(shaderProgram, "frameIndex");
+	
+	glm::vec2 spriteSheetSize = glm::vec2(2.0f, 1.0f);
+
+	glUseProgram(shaderProgram);
+	glUniform2fv(spriteSheetSizeLocation, 1, &spriteSheetSize[0]);
+	glUniform1i(frameIndexLocation, frameIndex);
 
 	while (true)
 	{
