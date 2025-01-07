@@ -206,7 +206,7 @@ int main(int argc, char **argv)
 	stbi_set_flip_vertically_on_load(true);
 
 	int width, height, nrChannels;
-	unsigned char* data = stbi_load("graphics/LonerA.bmp", &width, &height, &nrChannels, 0);
+	unsigned char* data = stbi_load("graphics/LonerA.bmp", &width, &height, &nrChannels, 0); //change the file name to the sprite sheet you want to use
 	if (data)
 	{
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
@@ -240,7 +240,7 @@ int main(int argc, char **argv)
 	float lastTime = SDL_GetTicks();
 	int frameIndex = 0;
 
-	glm::vec2 spriteSheetSize = glm::vec2(4.0f, 4.0f);
+	glm::vec2 spriteSheetSize = glm::vec2(4.0f, 4.0f); //CHANGE THIS TO THE NUMBER OF SPRITES IN THE SPRITESHEET
 
 	while (true)
 	{
