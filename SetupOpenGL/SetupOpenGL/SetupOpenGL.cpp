@@ -3,6 +3,7 @@
 #include <SDL.h>
 #include "stb_image.h"
 #include <glm/glm.hpp>
+#include "Texture.h"
 
 int main(int argc, char **argv)
 {
@@ -192,46 +193,16 @@ int main(int argc, char **argv)
 
 
 
-	GLuint texture;
-	glGenTextures(1, &texture);
-	glBindTexture(GL_TEXTURE_2D, texture);
+	Texture texture("graphics/LonerA.bmp");
 
-
-	// set the texture wrapping/filtering options (on the currently bound texture object)
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-
-	stbi_set_flip_vertically_on_load(true);
-
-	int width, height, nrChannels;
-	unsigned char* data = stbi_load("graphics/LonerA.bmp", &width, &height, &nrChannels, 0); //change the file name to the sprite sheet you want to use
-	if (data)
-	{
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-		glGenerateMipmap(GL_TEXTURE_2D);
-	}
-	else
-	{
-		std::cout << "Failed to load texture" << std::endl;
-	}
-	stbi_image_free(data);
-
-
-	GLuint texture2;
-	glGenTextures(1, &texture2);
-	glBindTexture(GL_TEXTURE_2D, texture2);
 
 
 	
 	glUseProgram(shaderProgram);
 	
 	GLuint textureLocation;
-	GLuint textureLocation2;
 
 	textureLocation = glGetUniformLocation(shaderProgram, "ourTexture");
-	textureLocation2 = glGetUniformLocation(shaderProgram, "ourTexture2");
 	
 	glUniform1i(textureLocation, 0);
 	glClearColor(0.2f, 0.5f, 0.3f, 1.0f);
@@ -271,8 +242,7 @@ int main(int argc, char **argv)
 
 		glBindVertexArray(vao);
 
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, texture);
+		texture.Bind(0);
 
 		GLint frameIndexLocation = glGetUniformLocation(shaderProgram, "frameIndex");
 		GLint spriteSheetSizeLocation = glGetUniformLocation(shaderProgram, "spriteSheetSize");
