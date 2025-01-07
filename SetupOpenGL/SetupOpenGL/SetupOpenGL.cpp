@@ -48,10 +48,10 @@ int main(int argc, char **argv)
 
 	float vertices[] = {
 		// positions         // colors           // texture coords
-		0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   0.5f, 1.0f,   // top right
-		0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   0.5f, 0.0f,   // bottom right
-	   -0.0f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
-	   -0.0f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f    // top left
+		0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
+		0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
+	   -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
+	   -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f    // top left
 	};
 
 	unsigned int indices[] = {  // note that we start from 0!
@@ -132,26 +132,27 @@ int main(int argc, char **argv)
 
 	const char* fragmentShaderSource = R"glsl(
 		#version 330 core
+
 		in vec3 Color;
 		in vec2 TexCoord;
 
 		out vec4 outColor;
 
 		uniform sampler2D ourTexture;
-		uniform sampler2D ourTexture2;
 
 		void main()
 		{
-			vec4 colTex1 = texture(ourTexture, TexCoord);
-			vec4 colTex2 = texture(ourTexture2, TexCoord);
-			outColor = mix(colTex1, colTex2, 1.0);
-			if (outColor == vec4(1.0, 0.0, 1.0, 1.0)) discard;
-		})glsl";
+			outColor = texture(ourTexture, TexCoord);
+
+			if (outColor == vec4(1.0f, 0.0f, 1.0f, 1.0f))
+				discard;
+		}
+		)glsl";
 
 	GLuint fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
 	glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
 	glCompileShader(fragmentShader);
-	
+
 	glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
 
 	if (!success)
@@ -205,7 +206,7 @@ int main(int argc, char **argv)
 	stbi_set_flip_vertically_on_load(true);
 
 	int width, height, nrChannels;
-	unsigned char* data = stbi_load("graphics/Burner1.bmp", &width, &height, &nrChannels, 0);
+	unsigned char* data = stbi_load("graphics/LonerA.bmp", &width, &height, &nrChannels, 0);
 	if (data)
 	{
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
@@ -223,27 +224,6 @@ int main(int argc, char **argv)
 	glBindTexture(GL_TEXTURE_2D, texture2);
 
 
-	// set the texture wrapping/filtering options (on the currently bound texture object)
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-
-
-
-	data = stbi_load("awesomeface.png", &width, &height, &nrChannels, 0);
-	if (data)
-	{
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-		glGenerateMipmap(GL_TEXTURE_2D);
-	}
-	else
-	{
-
-		std::cout << "Failed to load texture" << std::endl;
-	}
-	stbi_image_free(data);
 	
 	glUseProgram(shaderProgram);
 	
@@ -254,27 +234,13 @@ int main(int argc, char **argv)
 	textureLocation2 = glGetUniformLocation(shaderProgram, "ourTexture2");
 	
 	glUniform1i(textureLocation, 0);
-	//glUniform1i(textureLocation2, 1);
-		
-
 	glClearColor(0.2f, 0.5f, 0.3f, 1.0f);
-	
-//	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 	SDL_Event windowEvent;
-
 	float lastTime = SDL_GetTicks();
 	int frameIndex = 0;
 
-
-	GLuint spriteSheetSizeLocation = glGetUniformLocation(shaderProgram, "spriteSheetSize");
-	GLuint frameIndexLocation = glGetUniformLocation(shaderProgram, "frameIndex");
-	
-	glm::vec2 spriteSheetSize = glm::vec2(2.0f, 1.0f);
-
-	glUseProgram(shaderProgram);
-	glUniform2fv(spriteSheetSizeLocation, 1, &spriteSheetSize[0]);
-	glUniform1i(frameIndexLocation, frameIndex);
+	glm::vec2 spriteSheetSize = glm::vec2(4.0f, 4.0f);
 
 	while (true)
 	{
@@ -282,12 +248,12 @@ int main(int argc, char **argv)
 		{
 			if (windowEvent.type == SDL_QUIT) break;
 		}
-		
+
 		float currentTime = SDL_GetTicks();
 		float deltaTime = (currentTime - lastTime) / 1000.0f;
 		lastTime = currentTime;
 
-		float framesPerSecond = 12.0f; 
+		float framesPerSecond = 12.0f;
 
 		static float animationTime = 0.0f;
 		float frameDuration = 1.0f / framesPerSecond;
@@ -302,17 +268,18 @@ int main(int argc, char **argv)
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		glUseProgram(shaderProgram);
+
 		glBindVertexArray(vao);
 
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, texture);
-		glActiveTexture(GL_TEXTURE1);
-		glBindTexture(GL_TEXTURE_2D, texture2);
+
+		GLint frameIndexLocation = glGetUniformLocation(shaderProgram, "frameIndex");
+		GLint spriteSheetSizeLocation = glGetUniformLocation(shaderProgram, "spriteSheetSize");
+		glUniform1i(frameIndexLocation, frameIndex);
+		glUniform2fv(spriteSheetSizeLocation, 1, &spriteSheetSize[0]);
 
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-
-		
-		// Draw a triangle
 
 		SDL_GL_SwapWindow(window);
 	}
