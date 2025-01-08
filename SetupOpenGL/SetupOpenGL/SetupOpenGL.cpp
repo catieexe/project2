@@ -185,8 +185,6 @@ int main(int argc, char **argv)
 	textures.emplace_back("graphics/LonerC.bmp", glm::vec2(2.0f, 2.0f));
 
 	glUseProgram(shaderProgram);
-	
-	GLuint textureLocation;
 
 	GLuint textureLocation = glGetUniformLocation(shaderProgram, "ourTexture");
 	glUniform1i(textureLocation, 0);
@@ -225,7 +223,6 @@ int main(int argc, char **argv)
 		glUseProgram(shaderProgram);
 
 		glBindVertexArray(vao);
-
 
 		for (auto& texture : textures) {
 		texture.Bind(0);
