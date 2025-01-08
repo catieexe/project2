@@ -4,6 +4,7 @@
 #include "stb_image.h"
 #include <glm/glm.hpp>
 #include "Texture.h"
+#include <vector>
 
 int main(int argc, char **argv)
 {
@@ -32,20 +33,6 @@ int main(int argc, char **argv)
 		return -2;
 	}
 
-
-	// my triangle
-// 	float vertices[] = {
-// 	 0.0f,  0.5f, 1.0f, 0.0f, 0.0f, // Vertex 1: Red
-// 	 0.5f, -0.5f, 0.0f, 1.0f, 0.0f, // Vertex 2: Green
-// 	-0.5f, -0.5f, 0.0f, 0.0f, 1.0f  // Vertex 3: Blue
-// 	};
-
-// 	float vertices[] = {
-// 		0.5f,  0.5f, 1.0f, 0.0f, 0.0f, // top right
-// 		0.5f, -0.5f, 0.0f, 1.0f, 0.0f, // bottom right
-// 	   -0.5f, -0.5f, 0.0f, 0.0f, 1.0f, // bottom left
-// 	   -0.5f,  0.5f, 0.0f, 1.0f, 1.0f  // top left
-// 	};
 
 	float vertices[] = {
 		// positions         // colors           // texture coords
@@ -191,19 +178,17 @@ int main(int argc, char **argv)
 	glEnableVertexAttribArray(texCoordAttrib);
 	glVertexAttribPointer(texCoordAttrib, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
 
-
-	//insert ur textures here
-	Texture texture("graphics/LonerA.bmp"); // Load the texture
-	texture.SetSpriteSheetSize(glm::vec2(4.0f, 4.0f)); // Set the sprite sheet size
-
-
+	// Create an array of Texture objects
+	std::vector<Texture> textures;
+	textures.emplace_back("graphics/LonerA.bmp", glm::vec2(4.0f, 4.0f));
+	textures.emplace_back("graphics/LonerB.bmp", glm::vec2(3.0f, 3.0f));
+	textures.emplace_back("graphics/LonerC.bmp", glm::vec2(2.0f, 2.0f));
 
 	glUseProgram(shaderProgram);
 	
 	GLuint textureLocation;
 
-	textureLocation = glGetUniformLocation(shaderProgram, "ourTexture");
-	
+	GLuint textureLocation = glGetUniformLocation(shaderProgram, "ourTexture");
 	glUniform1i(textureLocation, 0);
 	glClearColor(0.2f, 0.5f, 0.3f, 1.0f);
 
@@ -231,7 +216,7 @@ int main(int argc, char **argv)
 
 		if (animationTime >= frameDuration)
 		{
-			frameIndex = (frameIndex + 1) % (int)(texture.m_SpriteSheetSize.x * texture.m_SpriteSheetSize.y);
+			frameIndex = (frameIndex + 1) % (int)(textures[0].GetSpriteSheetSize().x * textures[0].GetSpriteSheetSize().y);
 			animationTime -= frameDuration;
 		}
 
@@ -241,6 +226,8 @@ int main(int argc, char **argv)
 
 		glBindVertexArray(vao);
 
+
+		for (auto& texture : textures) {
 		texture.Bind(0);
 
 		GLint frameIndexLocation = glGetUniformLocation(shaderProgram, "frameIndex");
@@ -249,6 +236,7 @@ int main(int argc, char **argv)
 		glUniform2fv(spriteSheetSizeLocation, 1, &texture.m_SpriteSheetSize[0]);
 
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+		}
 
 		SDL_GL_SwapWindow(window);
 	}

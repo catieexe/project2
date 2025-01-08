@@ -7,14 +7,14 @@
 
 class Texture {
 public:
-    Texture(const std::string& filePath);
+    Texture(const std::string& filePath, const glm::vec2& spriteSheetSize);
     ~Texture();
     void Bind(unsigned int unit = 0) const;
-    void SetSpriteSheetSize(const glm::vec2& size);
+    const glm::vec2& GetSpriteSheetSize() const;
 
     GLuint m_TextureID;
     int m_Width, m_Height, m_NumChannels;
-    glm::vec2 m_SpriteSheetSize;
+    glm::vec2 m_SpriteSheetSize; 
 
 private:
     void LoadTexture(const std::string& filePath);

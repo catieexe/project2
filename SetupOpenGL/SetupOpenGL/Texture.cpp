@@ -2,7 +2,8 @@
 #include "stb_image.h"
 #include <iostream>
 
-Texture::Texture(const std::string& filePath) {
+Texture::Texture(const std::string& filePath, const glm::vec2& spriteSheetSize)
+    : m_SpriteSheetSize(spriteSheetSize) {
     LoadTexture(filePath);
 }
 
@@ -15,8 +16,8 @@ void Texture::Bind(unsigned int unit) const {
     glBindTexture(GL_TEXTURE_2D, m_TextureID);
 }
 
-void Texture::SetSpriteSheetSize(const glm::vec2& size) {
-    m_SpriteSheetSize = size;
+const glm::vec2& Texture::GetSpriteSheetSize() const {
+    return m_SpriteSheetSize;
 }
 
 void Texture::LoadTexture(const std::string& filePath) {

@@ -1,4 +1,7 @@
 ﻿  SetupOpenGL.cpp
-C:\Users\panan\Documents\project2\SetupOpenGL\SetupOpenGL\SetupOpenGL.cpp(212,17): warning C4244: 'initializing': conversion from 'Uint32' to 'float', possible loss of data
-C:\Users\panan\Documents\project2\SetupOpenGL\SetupOpenGL\SetupOpenGL.cpp(223,21): warning C4244: 'initializing': conversion from 'Uint32' to 'float', possible loss of data
-  SetupOpenGL.vcxproj -> C:\Users\panan\Documents\project2\SetupOpenGL\x64\Debug\SetupOpenGL.exe
+C:\Users\panan\Documents\project2\SetupOpenGL\SetupOpenGL\SetupOpenGL.cpp(191,9): error C2086: 'GLuint textureLocation': redefinition
+      C:\Users\panan\Documents\project2\SetupOpenGL\SetupOpenGL\SetupOpenGL.cpp(189,9):
+      see declaration of 'textureLocation'
+  
+C:\Users\panan\Documents\project2\SetupOpenGL\SetupOpenGL\SetupOpenGL.cpp(196,17): warning C4244: 'initializing': conversion from 'Uint32' to 'float', possible loss of data
+C:\Users\panan\Documents\project2\SetupOpenGL\SetupOpenGL\SetupOpenGL.cpp(207,21): warning C4244: 'initializing': conversion from 'Uint32' to 'float', possible loss of data
