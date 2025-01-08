@@ -1,4 +1,6 @@
 ﻿  SetupOpenGL.cpp
-C:\Users\panan\Documents\project2\SetupOpenGL\SetupOpenGL\SetupOpenGL.cpp(194,17): warning C4244: 'initializing': conversion from 'Uint32' to 'float', possible loss of data
-C:\Users\panan\Documents\project2\SetupOpenGL\SetupOpenGL\SetupOpenGL.cpp(205,21): warning C4244: 'initializing': conversion from 'Uint32' to 'float', possible loss of data
-  SetupOpenGL.vcxproj -> C:\Users\panan\Documents\project2\SetupOpenGL\x64\Debug\SetupOpenGL.exe
+C:\Users\varet\Documents\GitHub\project2\SetupOpenGL\SetupOpenGL\SetupOpenGL.cpp(205,17): warning C4244: 'initializing': conversion from 'Uint32' to 'float', possible loss of data
+C:\Users\varet\Documents\GitHub\project2\SetupOpenGL\SetupOpenGL\SetupOpenGL.cpp(222,21): warning C4244: 'initializing': conversion from 'Uint32' to 'float', possible loss of data
+C:\Users\varet\Documents\GitHub\project2\SetupOpenGL\SetupOpenGL\SetupOpenGL.cpp(245,26): warning C4267: 'argument': conversion from 'size_t' to 'unsigned int', possible loss of data
+C:\Users\varet\Documents\GitHub\project2\SetupOpenGL\SetupOpenGL\SetupOpenGL.cpp(252,73): warning C4267: 'argument': conversion from 'size_t' to 'GLint', possible loss of data
+  SetupOpenGL.vcxproj -> C:\Users\varet\Documents\GitHub\project2\SetupOpenGL\x64\Debug\SetupOpenGL.exe

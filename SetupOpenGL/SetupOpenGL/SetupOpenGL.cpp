@@ -35,17 +35,29 @@ int main(int argc, char **argv)
 
 
 	float vertices[] = {
+		// Object 1
 		// positions         // colors           // texture coords
-		0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
-		0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
-	   -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
-	   -0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f    // top left
+		0.0f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
+		0.0f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
+	   -0.75f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
+	   -0.75f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f,   // top left
+
+	   // Object 2 (shifted by 1.0 units on the x-axis)
+	   0.75f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
+	   0.75f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
+	   0.0f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
+	   0.0f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f    // top left
 	};
 
-	unsigned int indices[] = {  // note that we start from 0!
+	unsigned int indices[] = {
+		// Object 1
 		0, 1, 3,   // first triangle
-		1, 2, 3    // second triangle
-	};	
+		1, 2, 3,   // second triangle
+
+		// Object 2
+		4, 5, 7,   // first triangle
+		5, 6, 7    // second triangle
+	};
 
 	GLuint vbo; // vertex buffer object
 	glGenBuffers(1, &vbo); // Generate 1 buffer
@@ -182,7 +194,6 @@ int main(int argc, char **argv)
 	std::vector<Texture> textures;
 	textures.emplace_back("graphics/LonerA.bmp", glm::vec2(4.0f, 4.0f));
 	textures.emplace_back("graphics/LonerB.bmp", glm::vec2(4.0f, 4.0f));
-	textures.emplace_back("graphics/LonerC.bmp", glm::vec2(4.0f, 4.0f));
 
 	glUseProgram(shaderProgram);
 
@@ -194,6 +205,12 @@ int main(int argc, char **argv)
 	float lastTime = SDL_GetTicks();
 	int frameIndex = 0;
 
+	//Displays all the textures and their information at the start of runtime
+	for (const auto& texture : textures) {
+		std::cout << "Texture ID: " << texture.m_TextureID << std::endl;
+		std::cout << "Width: " << texture.m_Width << ", Height: " << texture.m_Height << ", Channels: " << texture.m_NumChannels << std::endl;
+		std::cout << "Sprite Sheet Size: (" << texture.m_SpriteSheetSize.x << ", " << texture.m_SpriteSheetSize.y << ")" << std::endl;
+	}
 
 	while (true)
 	{
@@ -224,16 +241,16 @@ int main(int argc, char **argv)
 
 		glBindVertexArray(vao);
 
-		for (auto& texture : textures) {
-		texture.Bind(0);
+        for (size_t i = 0; i < textures.size(); ++i) {
+        textures[i].Bind(i);
 
-		GLint frameIndexLocation = glGetUniformLocation(shaderProgram, "frameIndex");
-		GLint spriteSheetSizeLocation = glGetUniformLocation(shaderProgram, "spriteSheetSize");
-		glUniform1i(frameIndexLocation, frameIndex);
-		glUniform2fv(spriteSheetSizeLocation, 1, &texture.m_SpriteSheetSize[0]);
+        GLint frameIndexLocation = glGetUniformLocation(shaderProgram, "frameIndex");
+        GLint spriteSheetSizeLocation = glGetUniformLocation(shaderProgram, "spriteSheetSize");
+        glUniform1i(frameIndexLocation, frameIndex);
+        glUniform2fv(spriteSheetSizeLocation, 1, &textures[i].GetSpriteSheetSize()[0]);
 
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-		}
+        glDrawElementsBaseVertex(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, i * 4);
+        }
 
 		SDL_GL_SwapWindow(window);
 	}
