@@ -192,12 +192,13 @@ int main(int argc, char **argv)
 	glVertexAttribPointer(texCoordAttrib, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
 
 
-
-	Texture texture("graphics/LonerA.bmp");
-
+	//insert ur textures here
 
 
-	
+	Texture texture("graphics/clone.bmp");
+	texture.SetSpriteSheetSize(glm::vec2(4.0f, 5.0f));
+
+
 	glUseProgram(shaderProgram);
 	
 	GLuint textureLocation;
@@ -211,7 +212,6 @@ int main(int argc, char **argv)
 	float lastTime = SDL_GetTicks();
 	int frameIndex = 0;
 
-	glm::vec2 spriteSheetSize = glm::vec2(4.0f, 4.0f); //CHANGE THIS TO THE NUMBER OF SPRITES IN THE SPRITESHEET
 
 	while (true)
 	{
@@ -232,7 +232,7 @@ int main(int argc, char **argv)
 
 		if (animationTime >= frameDuration)
 		{
-			frameIndex = (frameIndex + 1) % (int)(spriteSheetSize.x * spriteSheetSize.y);
+			frameIndex = (frameIndex + 1) % (int)(texture.m_SpriteSheetSize.x * texture.m_SpriteSheetSize.y);
 			animationTime -= frameDuration;
 		}
 
@@ -247,7 +247,7 @@ int main(int argc, char **argv)
 		GLint frameIndexLocation = glGetUniformLocation(shaderProgram, "frameIndex");
 		GLint spriteSheetSizeLocation = glGetUniformLocation(shaderProgram, "spriteSheetSize");
 		glUniform1i(frameIndexLocation, frameIndex);
-		glUniform2fv(spriteSheetSizeLocation, 1, &spriteSheetSize[0]);
+		glUniform2fv(spriteSheetSizeLocation, 1, &texture.m_SpriteSheetSize[0]);
 
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
