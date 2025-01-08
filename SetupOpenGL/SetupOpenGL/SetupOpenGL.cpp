@@ -181,8 +181,8 @@ int main(int argc, char **argv)
 	// Create an array of Texture objects
 	std::vector<Texture> textures;
 	textures.emplace_back("graphics/LonerA.bmp", glm::vec2(4.0f, 4.0f));
-	textures.emplace_back("graphics/LonerB.bmp", glm::vec2(3.0f, 3.0f));
-	textures.emplace_back("graphics/LonerC.bmp", glm::vec2(2.0f, 2.0f));
+	textures.emplace_back("graphics/LonerB.bmp", glm::vec2(4.0f, 4.0f));
+	textures.emplace_back("graphics/LonerC.bmp", glm::vec2(4.0f, 4.0f));
 
 	glUseProgram(shaderProgram);
 
