@@ -193,10 +193,9 @@ int main(int argc, char **argv)
 
 
 	//insert ur textures here
+	Texture texture("graphics/LonerA.bmp"); // Load the texture
+	texture.SetSpriteSheetSize(glm::vec2(4.0f, 4.0f)); // Set the sprite sheet size
 
-
-	Texture texture("graphics/clone.bmp");
-	texture.SetSpriteSheetSize(glm::vec2(4.0f, 5.0f));
 
 
 	glUseProgram(shaderProgram);
