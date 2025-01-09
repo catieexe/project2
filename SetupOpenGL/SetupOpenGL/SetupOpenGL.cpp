@@ -58,6 +58,15 @@ int main(int argc, char **argv)
 	  -0.375f, -0.125f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
 	  -0.5625f, -0.125f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
 	  -0.5625f,  0.125f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f,   // top left
+
+	  // Object 4
+		0.125f, -0.375f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
+		0.125f, -0.625f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
+		-0.0625f, -0.625f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
+		-0.0625f, -0.375f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f,   // top left
+
+
+
 	};
 
 	unsigned int indices[] = {
@@ -76,6 +85,10 @@ int main(int argc, char **argv)
 		// Object 3
 		12, 13, 15,   // first triangle
 		13, 14, 15,   // second triangle
+
+		// Object 4
+		16, 17, 19,   // first triangle
+		17, 18, 19,   // second triangle
 	};
 
 	GLuint vbo, ebo; // vertex buffer object
@@ -211,6 +224,7 @@ int main(int argc, char **argv)
 	Texture LonerB("graphics/LonerB.bmp", glm::vec2(4.0f, 4.0f));
 	Texture LonerC("graphics/LonerC.bmp", glm::vec2(4.0f, 4.0f));
 	Texture Background("graphics/galaxy2.bmp", glm::vec2(1.0f, 1.0f));
+	Texture PUDive("graphics/PUDive.bmp", glm::vec2(4.0f, 2.0f));
 
 	glUseProgram(shaderProgram);
 
@@ -223,7 +237,8 @@ int main(int argc, char **argv)
 	GLuint textureLocationC = glGetUniformLocation(shaderProgram, "ourTexture");
 	glUniform1i(textureLocationC, 1); // Texture unit 1 for LonerC
 
-	glClearColor(0.2f, 0.5f, 0.3f, 1.0f);
+	GLuint textureLocationD = glGetUniformLocation(shaderProgram, "ourTexture");
+	glUniform1i(textureLocationD, 1); // Texture unit 1 for PUDive
 
 	SDL_Event windowEvent;
 	float lastTime = SDL_GetTicks();
@@ -295,6 +310,13 @@ int main(int argc, char **argv)
 		glUniform2fv(spriteSheetSizeLocation, 1, &LonerC.GetSpriteSheetSize()[0]);
 		glUniform1i(glGetUniformLocation(shaderProgram, "ourTexture"), 2);
 		glDrawElementsBaseVertex(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, 12);
+
+		// Draw Object 4 with PUDive texture
+		PUDive.Bind(3);
+		glUniform1i(frameIndexLocation, frameIndex);
+		glUniform2fv(spriteSheetSizeLocation, 1, &PUDive.GetSpriteSheetSize()[0]);
+		glUniform1i(glGetUniformLocation(shaderProgram, "ourTexture"), 3);
+		glDrawElementsBaseVertex(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, 16);
 
 		SDL_GL_SwapWindow(window);
 	}
