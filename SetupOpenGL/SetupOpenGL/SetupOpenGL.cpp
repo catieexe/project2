@@ -190,15 +190,16 @@ int main(int argc, char **argv)
 	glEnableVertexAttribArray(texCoordAttrib);
 	glVertexAttribPointer(texCoordAttrib, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
 
-	// Create an array of Texture objects
-	std::vector<Texture> textures;
-	textures.emplace_back("graphics/LonerA.bmp", glm::vec2(4.0f, 4.0f));
-	textures.emplace_back("graphics/LonerB.bmp", glm::vec2(4.0f, 4.0f));
+	Texture LonerA("graphics/LonerA.bmp", glm::vec2(4.0f, 4.0f));
+	Texture LonerB("graphics/LonerB.bmp", glm::vec2(4.0f, 4.0f));
 
 	glUseProgram(shaderProgram);
 
-	GLuint textureLocation = glGetUniformLocation(shaderProgram, "ourTexture");
-	glUniform1i(textureLocation, 0);
+	GLuint textureLocationA = glGetUniformLocation(shaderProgram, "ourTexture");
+	glUniform1i(textureLocationA, 0); // Texture unit 0 for LonerA
+
+	GLuint textureLocationB = glGetUniformLocation(shaderProgram, "ourTexture");
+	glUniform1i(textureLocationB, 1); // Texture unit 1 for LonerB
 	glClearColor(0.2f, 0.5f, 0.3f, 1.0f);
 
 	SDL_Event windowEvent;
@@ -206,11 +207,11 @@ int main(int argc, char **argv)
 	int frameIndex = 0;
 
 	//Displays all the textures and their information at the start of runtime
-	for (const auto& texture : textures) {
-		std::cout << "Texture ID: " << texture.m_TextureID << std::endl;
-		std::cout << "Width: " << texture.m_Width << ", Height: " << texture.m_Height << ", Channels: " << texture.m_NumChannels << std::endl;
-		std::cout << "Sprite Sheet Size: (" << texture.m_SpriteSheetSize.x << ", " << texture.m_SpriteSheetSize.y << ")" << std::endl;
-	}
+	//for (const auto& texture : textures) {
+	//	std::cout << "Texture ID: " << texture.m_TextureID << std::endl;
+	//	std::cout << "Width: " << texture.m_Width << ", Height: " << texture.m_Height << ", Channels: " << texture.m_NumChannels << std::endl;
+	//	std::cout << "Sprite Sheet Size: (" << texture.m_SpriteSheetSize.x << ", " << texture.m_SpriteSheetSize.y << ")" << std::endl;
+	//}
 
 	while (true)
 	{
@@ -231,7 +232,7 @@ int main(int argc, char **argv)
 
 		if (animationTime >= frameDuration)
 		{
-			frameIndex = (frameIndex + 1) % (int)(textures[0].GetSpriteSheetSize().x * textures[0].GetSpriteSheetSize().y);
+			frameIndex = (frameIndex + 1) % (int)(LonerA.GetSpriteSheetSize().x * LonerA.GetSpriteSheetSize().y);
 			animationTime -= frameDuration;
 		}
 
@@ -241,16 +242,22 @@ int main(int argc, char **argv)
 
 		glBindVertexArray(vao);
 
-        for (size_t i = 0; i < textures.size(); ++i) {
-        textures[i].Bind(i);
+		// Draw Object 1 with LonerA texture
+		LonerA.Bind(0);
+		
+		GLint frameIndexLocation = glGetUniformLocation(shaderProgram, "frameIndex");
+		GLint spriteSheetSizeLocation = glGetUniformLocation(shaderProgram, "spriteSheetSize");
+		glUniform1i(frameIndexLocation, frameIndex);
+		glUniform2fv(spriteSheetSizeLocation, 1, &LonerA.GetSpriteSheetSize()[0]);
+		glUniform1i(glGetUniformLocation(shaderProgram, "ourTexture"), 0);
+		glDrawElementsBaseVertex(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, 0);
 
-        GLint frameIndexLocation = glGetUniformLocation(shaderProgram, "frameIndex");
-        GLint spriteSheetSizeLocation = glGetUniformLocation(shaderProgram, "spriteSheetSize");
-        glUniform1i(frameIndexLocation, frameIndex);
-        glUniform2fv(spriteSheetSizeLocation, 1, &textures[i].GetSpriteSheetSize()[0]);
-
-        glDrawElementsBaseVertex(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, i * 4);
-        }
+		// Draw Object 2 with LonerB texture
+		LonerB.Bind(0);
+		glUniform1i(frameIndexLocation, frameIndex);
+		glUniform2fv(spriteSheetSizeLocation, 1, &LonerB.GetSpriteSheetSize()[0]);
+		glUniform1i(glGetUniformLocation(shaderProgram, "ourTexture"), 0);
+		glDrawElementsBaseVertex(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, 4);
 
 		SDL_GL_SwapWindow(window);
 	}
