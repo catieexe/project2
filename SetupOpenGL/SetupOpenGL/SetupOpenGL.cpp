@@ -35,41 +35,47 @@ int main(int argc, char **argv)
 
 
 	float vertices[] = {
-		// Object 1
-		// positions         // colors           // texture coords
-		// Object 1 (shrunk to quarter size)
-		0.0f,      0.125f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
-		0.0f,     -0.125f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
-		-0.1875f, -0.125f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
-		-0.1875f,  0.125f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f,   // top left
+		// Background
+		1.0f,  1.0f, 0.0f,   1.0f, 1.0f, 1.0f,   1.0f, 1.0f,   // top right
+		1.0f, -1.0f, 0.0f,   1.0f, 1.0f, 1.0f,   1.0f, 0.0f,   // bottom right
+	   -1.0f, -1.0f, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f, 0.0f,   // bottom left
+	   -1.0f,  1.0f, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f, 1.0f,   // top left
 
-		// Object 2
-		-0.1875f,  0.625f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
-		-0.1875f,  0.375f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
-		-0.375f,   0.375f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
-		-0.375f,   0.625f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f,   // top left
+	   // Object 1 (shrunk to quarter size)
+	   0.0f,      0.125f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
+	   0.0f,     -0.125f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
+	  -0.1875f, -0.125f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
+	  -0.1875f,  0.125f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f,   // top left
 
-		// Object 3
-		-0.375f,  0.125f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
-		-0.375f, -0.125f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
-		-0.5625f, -0.125f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
-		-0.5625f,  0.125f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f,   // top left
+	  // Object 2
+	  -0.1875f,  0.625f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
+	  -0.1875f,  0.375f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
+	  -0.375f,   0.375f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
+	  -0.375f,   0.625f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f,   // top left
 
-
+	  // Object 3
+	  -0.375f,  0.125f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
+	  -0.375f, -0.125f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
+	  -0.5625f, -0.125f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
+	  -0.5625f,  0.125f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f,   // top left
 	};
 
 	unsigned int indices[] = {
-		// Object 1
+		// Background
 		0, 1, 3,   // first triangle
 		1, 2, 3,   // second triangle
 
-		// Object 2
+		// Object 1
 		4, 5, 7,   // first triangle
-		5, 6, 7,    // second triangle
+		5, 6, 7,   // second triangle
+
+		// Object 2
+		8, 9, 11,   // first triangle
+		9, 10, 11,   // second triangle
 
 		// Object 3
-		8, 9, 11,   // first triangle
-		9, 10, 11    // second triangle
+		12, 13, 15,   // first triangle
+		13, 14, 15,   // second triangle
 	};
 
 	GLuint vbo, ebo; // vertex buffer object
@@ -204,6 +210,7 @@ int main(int argc, char **argv)
 	Texture LonerA("graphics/LonerA.bmp", glm::vec2(4.0f, 4.0f));
 	Texture LonerB("graphics/LonerB.bmp", glm::vec2(4.0f, 4.0f));
 	Texture LonerC("graphics/LonerC.bmp", glm::vec2(4.0f, 4.0f));
+	Texture Background("graphics/galaxy2.bmp", glm::vec2(4.0f, 4.0f));
 
 	glUseProgram(shaderProgram);
 
@@ -261,26 +268,33 @@ int main(int argc, char **argv)
 		GLint frameIndexLocation = glGetUniformLocation(shaderProgram, "frameIndex");
 		GLint spriteSheetSizeLocation = glGetUniformLocation(shaderProgram, "spriteSheetSize");
 
+		// Draw Background
+		Background.Bind(0);
+		glUniform1i(frameIndexLocation, 0); // No animation for background
+		glUniform2fv(spriteSheetSizeLocation, 1, &Background.GetSpriteSheetSize()[0]);
+		glUniform1i(glGetUniformLocation(shaderProgram, "ourTexture"), 0);
+		glDrawElementsBaseVertex(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, 0);
+
 		// Draw Object 1 with LonerA texture
 		LonerA.Bind(0);
 		glUniform1i(frameIndexLocation, frameIndex);
 		glUniform2fv(spriteSheetSizeLocation, 1, &LonerA.GetSpriteSheetSize()[0]);
 		glUniform1i(glGetUniformLocation(shaderProgram, "ourTexture"), 0);
-		glDrawElementsBaseVertex(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, 0);
+		glDrawElementsBaseVertex(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, 4);
 
 		// Draw Object 2 with LonerB texture
 		LonerB.Bind(1);
 		glUniform1i(frameIndexLocation, frameIndex);
 		glUniform2fv(spriteSheetSizeLocation, 1, &LonerB.GetSpriteSheetSize()[0]);
 		glUniform1i(glGetUniformLocation(shaderProgram, "ourTexture"), 1);
-		glDrawElementsBaseVertex(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, 4);
+		glDrawElementsBaseVertex(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, 8);
 
 		// Draw Object 3 with LonerC texture
 		LonerC.Bind(2);
 		glUniform1i(frameIndexLocation, frameIndex);
 		glUniform2fv(spriteSheetSizeLocation, 1, &LonerC.GetSpriteSheetSize()[0]);
 		glUniform1i(glGetUniformLocation(shaderProgram, "ourTexture"), 2);
-		glDrawElementsBaseVertex(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, 8);
+		glDrawElementsBaseVertex(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, 12);
 
 		SDL_GL_SwapWindow(window);
 	}
