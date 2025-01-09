@@ -44,16 +44,17 @@ int main(int argc, char **argv)
 		-0.1875f,  0.125f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f,   // top left
 
 		// Object 2
-		0.1875f,  0.125f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
-		0.1875f, -0.125f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
-		0.0f,    -0.125f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
-		0.0f,     0.125f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f,    // top left
+		-0.1875f,  0.625f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
+		-0.1875f,  0.375f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
+		-0.375f,   0.375f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
+		-0.375f,   0.625f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f,   // top left
 
 		// Object 3
-		-0.5625f,  0.625f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
-		-0.5625f,  0.375f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
-		-0.75f,    0.375f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
-		-0.75f,    0.625f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f    // top left
+		-0.375f,  0.125f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
+		-0.375f, -0.125f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
+		-0.5625f, -0.125f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
+		-0.5625f,  0.125f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f,   // top left
+
 
 	};
 
@@ -71,10 +72,8 @@ int main(int argc, char **argv)
 		9, 10, 11    // second triangle
 	};
 
-	GLuint vbo; // vertex buffer object
+	GLuint vbo, ebo; // vertex buffer object
 	glGenBuffers(1, &vbo); // Generate 1 buffer
-
-	GLuint ebo;
 	glGenBuffers(1, &ebo);	
 
 	GLuint vao;
@@ -270,21 +269,23 @@ int main(int argc, char **argv)
 		glDrawElementsBaseVertex(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, 0);
 
 		// Draw Object 2 with LonerB texture
-		LonerB.Bind(0);
+		LonerB.Bind(1);
 		glUniform1i(frameIndexLocation, frameIndex);
 		glUniform2fv(spriteSheetSizeLocation, 1, &LonerB.GetSpriteSheetSize()[0]);
-		glUniform1i(glGetUniformLocation(shaderProgram, "ourTexture"), 0);
+		glUniform1i(glGetUniformLocation(shaderProgram, "ourTexture"), 1);
 		glDrawElementsBaseVertex(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, 4);
 
-		// Draw Object 2 with LonerC texture
-		LonerC.Bind(0);
+		// Draw Object 3 with LonerC texture
+		LonerC.Bind(2);
 		glUniform1i(frameIndexLocation, frameIndex);
 		glUniform2fv(spriteSheetSizeLocation, 1, &LonerC.GetSpriteSheetSize()[0]);
-		glUniform1i(glGetUniformLocation(shaderProgram, "ourTexture"), 0);
+		glUniform1i(glGetUniformLocation(shaderProgram, "ourTexture"), 2);
 		glDrawElementsBaseVertex(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, 8);
 
 		SDL_GL_SwapWindow(window);
 	}
+
+
 
 	SDL_GL_DeleteContext(context);
 	SDL_DestroyWindow(window);
