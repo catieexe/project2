@@ -210,7 +210,7 @@ int main(int argc, char **argv)
 	Texture LonerA("graphics/LonerA.bmp", glm::vec2(4.0f, 4.0f));
 	Texture LonerB("graphics/LonerB.bmp", glm::vec2(4.0f, 4.0f));
 	Texture LonerC("graphics/LonerC.bmp", glm::vec2(4.0f, 4.0f));
-	Texture Background("graphics/galaxy2.bmp", glm::vec2(4.0f, 4.0f));
+	Texture Background("graphics/galaxy2.bmp", glm::vec2(1.0f, 1.0f));
 
 	glUseProgram(shaderProgram);
 
