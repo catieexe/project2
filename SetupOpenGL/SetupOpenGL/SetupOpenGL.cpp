@@ -59,12 +59,17 @@ int main(int argc, char **argv)
 	  -0.5625f, -0.125f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
 	  -0.5625f,  0.125f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f,   // top left
 
-	  // Object 4
+		// Object 4
 		0.125f, -0.375f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
 		0.125f, -0.625f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
-		-0.0625f, -0.625f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
-		-0.0625f, -0.375f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f,   // top left
+	   -0.0625f, -0.625f, 0.0f,  0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
+	   -0.0625f, -0.375f, 0.0f,  1.0f, 1.0f, 0.0f,   0.0f, 1.0f,   // top left
 
+		//test for UI
+		0.2f,  0.2f, 0.0f,   1.0f, 1.0f, 1.0f,   1.0f, 1.0f,   // top right
+		0.2f, -0.2f, 0.0f,   1.0f, 1.0f, 1.0f,   1.0f, 0.0f,   // bottom right
+	   -0.2f, -0.2f, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f, 0.0f,   // bottom left
+	   -0.2f,  0.2f, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f, 1.0f,   // top left
 
 
 	};
@@ -89,6 +94,10 @@ int main(int argc, char **argv)
 		// Object 4
 		16, 17, 19,   // first triangle
 		17, 18, 19,   // second triangle
+		
+		//test for UI
+		20, 21, 23,   // first triangle
+		21, 22, 23,   // second triangle
 	};
 
 	GLuint vbo, ebo; // vertex buffer object
@@ -225,6 +234,7 @@ int main(int argc, char **argv)
 	Texture LonerC("graphics/LonerC.bmp", glm::vec2(4.0f, 4.0f));
 	Texture Background("graphics/galaxy2.bmp", glm::vec2(1.0f, 1.0f));
 	Texture PUDive("graphics/PUDive.bmp", glm::vec2(4.0f, 2.0f));
+	Texture fontLarge("graphics/font16x16.bmp", glm::vec2(8.0f, 12.0f));
 
 	glUseProgram(shaderProgram);
 
@@ -235,10 +245,13 @@ int main(int argc, char **argv)
 	glUniform1i(textureLocationB, 1); // Texture unit 1 for LonerB
 
 	GLuint textureLocationC = glGetUniformLocation(shaderProgram, "ourTexture");
-	glUniform1i(textureLocationC, 1); // Texture unit 1 for LonerC
+	glUniform1i(textureLocationC, 2); // Texture unit 1 for LonerC
 
 	GLuint textureLocationD = glGetUniformLocation(shaderProgram, "ourTexture");
-	glUniform1i(textureLocationD, 1); // Texture unit 1 for PUDive
+	glUniform1i(textureLocationD, 3); // Texture unit 1 for PUDive
+
+	GLuint textureLocationE = glGetUniformLocation(shaderProgram, "ourTexture");
+	glUniform1i(textureLocationE, 4); // Texture unit UI
 
 	SDL_Event windowEvent;
 	float lastTime = SDL_GetTicks();
@@ -317,6 +330,13 @@ int main(int argc, char **argv)
 		glUniform2fv(spriteSheetSizeLocation, 1, &PUDive.GetSpriteSheetSize()[0]);
 		glUniform1i(glGetUniformLocation(shaderProgram, "ourTexture"), 3);
 		glDrawElementsBaseVertex(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, 16);
+
+		// Draw test for UI
+		fontLarge.Bind(4);
+		glUniform1i(frameIndexLocation, 0);
+		glUniform2fv(spriteSheetSizeLocation, 1, &Background.GetSpriteSheetSize()[0]);
+		glUniform1i(glGetUniformLocation(shaderProgram, "ourTexture"), 4);
+		glDrawElementsBaseVertex(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, 20);
 
 		SDL_GL_SwapWindow(window);
 	}
