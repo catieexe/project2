@@ -80,6 +80,11 @@ int main(int argc, char** argv)
 		-0.04f, -0.04f, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f, 0.0f,   // bottom left
 		-0.04f,  0.04f, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f, 1.0f,   // top left
 
+		// Rocks
+		  1.5625f, -0.375f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
+		  1.5625f, -0.625f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
+		 0.4375f, -0.625f, 0.0f,  0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
+		 0.4375f, -0.375f, 0.0f,  1.0f, 1.0f, 0.0f,   0.0f, 1.0f,	 // top left
 
 
 
@@ -229,6 +234,7 @@ int main(int argc, char** argv)
 	Texture PUDive("graphics/PUDive.bmp", glm::vec2(4.0f, 2.0f));
 	Texture fontLarge("graphics/font16x16.bmp", glm::vec2(8.0f, 12.0f));
 	Texture fontSmall("graphics/font8x8.bmp", glm::vec2(8.0f, 16.0f)); // loads of blank space on sprite
+	Texture Rocks("graphics/Blocks.bmp", glm::vec2(2.0f, 64.0f));
 
 	glUseProgram(shaderProgram);
 
@@ -249,6 +255,9 @@ int main(int argc, char** argv)
 
 	GLuint textureLocationF = glGetUniformLocation(shaderProgram, "ourTexture");
 	glUniform1i(textureLocationF, 5); // Texture unit UIsmall
+
+	GLuint textureLocationG = glGetUniformLocation(shaderProgram, "ourTexture");
+	glUniform1i(textureLocationG, 6); // Texture unit 6 for Rocks
 
 	SDL_Event windowEvent;
 	float lastTime = SDL_GetTicks();
@@ -305,6 +314,12 @@ int main(int argc, char** argv)
 	// Get the location of the transform uniform
 	GLint transformLoc = glGetUniformLocation(shaderProgram, "transform");
 
+	float rockSpeed = 0.5f; // Speed of the movement
+	float topPosition = 1.5f; // Top position
+	float bottomPosition = -1.5f; // Bottom position
+	float rockPosition = topPosition; // Initial position
+	bool movingDown = true; // Initial direction
+
 	while (true)
 	{
 		if (SDL_PollEvent(&windowEvent))
@@ -328,6 +343,16 @@ int main(int argc, char** argv)
 			animationTime -= frameDuration;
 		}
 
+		if (movingDown)
+		{
+			rockPosition -= rockSpeed * deltaTime;
+			if (rockPosition <= bottomPosition)
+			{
+				rockPosition = topPosition;
+
+			}
+		}
+
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		glUseProgram(shaderProgram);
@@ -344,6 +369,16 @@ int main(int argc, char** argv)
 		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(glm::mat4(1.0f)));
 		glUniform1i(glGetUniformLocation(shaderProgram, "ourTexture"), 0);
 		glDrawElementsBaseVertex(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, 0);
+
+		glm::mat4 rockTransform = glm::mat4(1.0f);
+		rockTransform = glm::translate(rockTransform, glm::vec3(0.0f, rockPosition, 0.0f));
+
+		Rocks.Bind(6);
+		glUniform1i(frameIndexLocation, 101); // No animation for Rocks
+		glUniform2fv(spriteSheetSizeLocation, 1, &Rocks.GetSpriteSheetSize()[0]);
+		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(rockTransform));
+		glUniform1i(glGetUniformLocation(shaderProgram, "ourTexture"), 6);
+		glDrawElementsBaseVertex(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, 28);
 
 		// Draw Object 1 with LonerA texture
 		LonerA.Bind(0);
