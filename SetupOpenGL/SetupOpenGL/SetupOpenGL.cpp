@@ -8,7 +8,7 @@
 #include "Texture.h"
 #include <vector>
 
-int main(int argc, char **argv)
+int main(int argc, char** argv)
 {
 	SDL_Init(SDL_INIT_VIDEO);
 
@@ -37,75 +37,56 @@ int main(int argc, char **argv)
 
 
 	float vertices[] = {
-	//	X		Y      Z        R    G    B         S    T
-		// Background
-		1.0f,  1.0f, 0.0f,   1.0f, 1.0f, 1.0f,   1.0f, 1.0f,   // top right
-		1.0f, -1.0f, 0.0f,   1.0f, 1.0f, 1.0f,   1.0f, 0.0f,   // bottom right
-	   -1.0f, -1.0f, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f, 0.0f,   // bottom left
-	   -1.0f,  1.0f, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f, 1.0f,   // top left
+		//	X		Y      Z        R    G    B         S    T
+			// Background
+			1.0f,  1.0f, 0.0f,   1.0f, 1.0f, 1.0f,   1.0f, 1.0f,   // top right
+			1.0f, -1.0f, 0.0f,   1.0f, 1.0f, 1.0f,   1.0f, 0.0f,   // bottom right
+		   -1.0f, -1.0f, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f, 0.0f,   // bottom left
+		   -1.0f,  1.0f, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f, 1.0f,   // top left
 
-	   // Object 1
-	   0.0f,      0.125f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
-	   0.0f,     -0.125f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
-	  -0.1875f, -0.125f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
-	  -0.1875f,  0.125f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f,   // top left
+		   // Object 1
+		   0.0f,      0.125f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
+		   0.0f,     -0.125f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
+		  -0.1875f, -0.125f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
+		  -0.1875f,  0.125f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f,   // top left
 
-	  // Object 2
-	  -0.1875f,  0.625f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
-	  -0.1875f,  0.375f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
-	  -0.375f,   0.375f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
-	  -0.375f,   0.625f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f,   // top left
+		  // Object 2
+		  -0.1875f,  0.625f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
+		  -0.1875f,  0.375f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
+		  -0.375f,   0.375f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
+		  -0.375f,   0.625f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f,   // top left
 
-	  // Object 3
-	  -0.375f,  0.125f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
-	  -0.375f, -0.125f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
-	  -0.5625f, -0.125f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
-	  -0.5625f,  0.125f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f,   // top left
+		  // Object 3
+		  -0.375f,  0.125f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
+		  -0.375f, -0.125f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
+		  -0.5625f, -0.125f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
+		  -0.5625f,  0.125f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f,   // top left
 
-		// Object 4
-		0.125f, -0.375f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
-		0.125f, -0.625f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
-	   -0.0625f, -0.625f, 0.0f,  0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
-	   -0.0625f, -0.375f, 0.0f,  1.0f, 1.0f, 0.0f,   0.0f, 1.0f,   // top left
+		  // Object 4
+		  0.125f, -0.375f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
+		  0.125f, -0.625f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
+		 -0.0625f, -0.625f, 0.0f,  0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
+		 -0.0625f, -0.375f, 0.0f,  1.0f, 1.0f, 0.0f,   0.0f, 1.0f,   // top left
 
-		//test for UI
-		0.2f,  0.4f, 0.0f,   1.0f, 1.0f, 1.0f,   1.0f, 1.0f,   // top right
-		0.2f, -0.2f, 0.0f,   1.0f, 1.0f, 1.0f,   1.0f, 0.0f,   // bottom right
-	   -0.2f, -0.2f, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f, 0.0f,   // bottom left
-	   -0.2f,  0.4f, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f, 1.0f,   // top left
+		 //test for UI
+		 0.2f,  0.4f, 0.0f,   1.0f, 1.0f, 1.0f,   1.0f, 1.0f,   // top right
+		 0.2f, -0.2f, 0.0f,   1.0f, 1.0f, 1.0f,   1.0f, 0.0f,   // bottom right
+		-0.2f, -0.2f, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f, 0.0f,   // bottom left
+		-0.2f,  0.4f, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f, 1.0f,   // top left
 
 
 	};
 
 	unsigned int indices[] = {
-		// Background
+
 		0, 1, 3,   // first triangle
 		1, 2, 3,   // second triangle
 
-		// Object 1
-		4, 5, 7,   // first triangle
-		5, 6, 7,   // second triangle
-
-		// Object 2
-		8, 9, 11,   // first triangle
-		9, 10, 11,   // second triangle
-
-		// Object 3
-		12, 13, 15,   // first triangle
-		13, 14, 15,   // second triangle
-
-		// Object 4
-		16, 17, 19,   // first triangle
-		17, 18, 19,   // second triangle0
-		
-		//test for UI
-		20, 21, 23,   // first triangle
-		21, 22, 23,   // second triangle
 	};
 
 	GLuint vbo, ebo; // vertex buffer object
 	glGenBuffers(1, &vbo); // Generate 1 buffer
-	glGenBuffers(1, &ebo);	
+	glGenBuffers(1, &ebo);
 
 	GLuint vao;
 	glGenVertexArrays(1, &vao);
@@ -127,7 +108,7 @@ int main(int argc, char **argv)
 		in vec3 position;
 		in vec3 color;
 		in vec2 texCoord;
-		
+    
 		out vec3 Color;
 		out vec2 TexCoord;
 
@@ -138,7 +119,7 @@ int main(int argc, char **argv)
 		void main()
 		{
 			Color = color;
-
+	
 			int cols = int(spriteSheetSize.x);
 			int rows = int(spriteSheetSize.y);
 
@@ -150,7 +131,7 @@ int main(int argc, char **argv)
 
 			TexCoord = texCoord * vec2(texWidth, texHeight) + vec2(float(column) * texWidth, 1.0 - float(row + 1) * texHeight);
 
-			gl_Position = vec4(position, 1.0);
+			gl_Position = transform * vec4(position, 1.0);
 		}
 		)glsl";
 	//function above inside void goes through the img file to pick which sprite to draw
@@ -164,7 +145,7 @@ int main(int argc, char **argv)
 	GLint  success;
 	char infoLog[512];
 	glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
-	
+
 	if (!success)
 	{
 		glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
