@@ -69,11 +69,10 @@ int main(int argc, char** argv)
 		 -0.0625f, -0.375f, 0.0f,  1.0f, 1.0f, 0.0f,   0.0f, 1.0f,   // top left
 
 		 //test for UI
-		 0.2f,  0.4f, 0.0f,   1.0f, 1.0f, 1.0f,   1.0f, 1.0f,   // top right
-		 0.2f, -0.2f, 0.0f,   1.0f, 1.0f, 1.0f,   1.0f, 0.0f,   // bottom right
-		-0.2f, -0.2f, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f, 0.0f,   // bottom left
-		-0.2f,  0.4f, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f, 1.0f,   // top left
-
+		 0.05f,  0.1f, 0.0f,   1.0f, 1.0f, 1.0f,   1.0f, 1.0f,   // top right
+		 0.05f, -0.05f, 0.0f,   1.0f, 1.0f, 1.0f,   1.0f, 0.0f,   // bottom right
+		 -0.05f, -0.05f, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f, 0.0f,   // bottom left
+		 -0.05f,  0.1f, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f, 1.0f,   // top left
 
 	};
 
@@ -252,22 +251,22 @@ int main(int argc, char** argv)
 	// Draw test for UI
 		// Create transformation matrices for each character
 	glm::mat4 transformP = glm::mat4(1.0f);
-	transformP = glm::translate(transformP, glm::vec3(0.0f, 0.0f, 0.0f)); // Position for 'P'
+	transformP = glm::translate(transformP, glm::vec3(-0.9f, 0.8f, 0.0f)); // Position for 'P'
 
 	glm::mat4 transformL = glm::mat4(1.0f);
-	transformL = glm::translate(transformL, glm::vec3(0.2f, 0.0f, 0.0f)); // Position for 'l'
+	transformL = glm::translate(transformL, glm::vec3(-0.82f, 0.8f, 0.0f)); // Position for 'l'
 
 	glm::mat4 transformA = glm::mat4(1.0f);
-	transformA = glm::translate(transformA, glm::vec3(0.4f, 0.0f, 0.0f)); // Position for 'a'
+	transformA = glm::translate(transformA, glm::vec3(-0.74f, 0.8f, 0.0f)); // Position for 'a'
 
 	glm::mat4 transformY = glm::mat4(1.0f);
-	transformY = glm::translate(transformY, glm::vec3(0.6f, 0.0f, 0.0f)); // Position for 'y'
+	transformY = glm::translate(transformY, glm::vec3(-0.64f, 0.8f, 0.0f)); // Position for 'y'
 
 	glm::mat4 transformE = glm::mat4(1.0f);
-	transformE = glm::translate(transformE, glm::vec3(0.8f, 0.0f, 0.0f)); // Position for 'e'
+	transformE = glm::translate(transformE, glm::vec3(-0.54f, 0.8f, 0.0f)); // Position for 'e'
 
 	glm::mat4 transformR = glm::mat4(1.0f);
-	transformR = glm::translate(transformR, glm::vec3(1.0f, 0.0f, 0.0f)); // Position for 'r'
+	transformR = glm::translate(transformR, glm::vec3(-0.44f, 0.8f, 0.0f)); // Position for 'r'
 
 	// Get the location of the transform uniform
 	GLint transformLoc = glGetUniformLocation(shaderProgram, "transform");
@@ -308,6 +307,7 @@ int main(int argc, char** argv)
 		Background.Bind(0);
 		glUniform1i(frameIndexLocation, 0); // No animation for background
 		glUniform2fv(spriteSheetSizeLocation, 1, &Background.GetSpriteSheetSize()[0]);
+		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(glm::mat4(1.0f)));
 		glUniform1i(glGetUniformLocation(shaderProgram, "ourTexture"), 0);
 		glDrawElementsBaseVertex(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, 0);
 
@@ -315,6 +315,7 @@ int main(int argc, char** argv)
 		LonerA.Bind(0);
 		glUniform1i(frameIndexLocation, frameIndex);
 		glUniform2fv(spriteSheetSizeLocation, 1, &LonerA.GetSpriteSheetSize()[0]);
+		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(glm::mat4(1.0f)));
 		glUniform1i(glGetUniformLocation(shaderProgram, "ourTexture"), 0);
 		glDrawElementsBaseVertex(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, 4);
 
@@ -322,6 +323,7 @@ int main(int argc, char** argv)
 		LonerB.Bind(1);
 		glUniform1i(frameIndexLocation, frameIndex);
 		glUniform2fv(spriteSheetSizeLocation, 1, &LonerB.GetSpriteSheetSize()[0]);
+		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(glm::mat4(1.0f)));
 		glUniform1i(glGetUniformLocation(shaderProgram, "ourTexture"), 1);
 		glDrawElementsBaseVertex(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, 8);
 
@@ -329,6 +331,7 @@ int main(int argc, char** argv)
 		LonerC.Bind(2);
 		glUniform1i(frameIndexLocation, frameIndex);
 		glUniform2fv(spriteSheetSizeLocation, 1, &LonerC.GetSpriteSheetSize()[0]);
+		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(glm::mat4(1.0f)));
 		glUniform1i(glGetUniformLocation(shaderProgram, "ourTexture"), 2);
 		glDrawElementsBaseVertex(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, 12);
 
@@ -336,6 +339,7 @@ int main(int argc, char** argv)
 		PUDive.Bind(3);
 		glUniform1i(frameIndexLocation, frameIndex);
 		glUniform2fv(spriteSheetSizeLocation, 1, &PUDive.GetSpriteSheetSize()[0]);
+		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(glm::mat4(1.0f)));
 		glUniform1i(glGetUniformLocation(shaderProgram, "ourTexture"), 3);
 		glDrawElementsBaseVertex(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, 16);
 
