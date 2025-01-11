@@ -3,6 +3,8 @@
 #include <SDL.h>
 #include "stb_image.h"
 #include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 #include "Texture.h"
 #include <vector>
 
@@ -35,13 +37,14 @@ int main(int argc, char **argv)
 
 
 	float vertices[] = {
+	//	X		Y      Z        R    G    B         S    T
 		// Background
 		1.0f,  1.0f, 0.0f,   1.0f, 1.0f, 1.0f,   1.0f, 1.0f,   // top right
 		1.0f, -1.0f, 0.0f,   1.0f, 1.0f, 1.0f,   1.0f, 0.0f,   // bottom right
 	   -1.0f, -1.0f, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f, 0.0f,   // bottom left
 	   -1.0f,  1.0f, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f, 1.0f,   // top left
 
-	   // Object 1 (shrunk to quarter size)
+	   // Object 1
 	   0.0f,      0.125f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
 	   0.0f,     -0.125f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
 	  -0.1875f, -0.125f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
@@ -66,10 +69,10 @@ int main(int argc, char **argv)
 	   -0.0625f, -0.375f, 0.0f,  1.0f, 1.0f, 0.0f,   0.0f, 1.0f,   // top left
 
 		//test for UI
-		0.2f,  0.2f, 0.0f,   1.0f, 1.0f, 1.0f,   1.0f, 1.0f,   // top right
+		0.2f,  0.4f, 0.0f,   1.0f, 1.0f, 1.0f,   1.0f, 1.0f,   // top right
 		0.2f, -0.2f, 0.0f,   1.0f, 1.0f, 1.0f,   1.0f, 0.0f,   // bottom right
 	   -0.2f, -0.2f, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f, 0.0f,   // bottom left
-	   -0.2f,  0.2f, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f, 1.0f,   // top left
+	   -0.2f,  0.4f, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f, 1.0f,   // top left
 
 
 	};
@@ -93,7 +96,7 @@ int main(int argc, char **argv)
 
 		// Object 4
 		16, 17, 19,   // first triangle
-		17, 18, 19,   // second triangle
+		17, 18, 19,   // second triangle0
 		
 		//test for UI
 		20, 21, 23,   // first triangle
@@ -128,6 +131,7 @@ int main(int argc, char **argv)
 		out vec3 Color;
 		out vec2 TexCoord;
 
+		uniform mat4 transform;
 		uniform vec2 spriteSheetSize;
 		uniform int frameIndex;
 
@@ -264,6 +268,29 @@ int main(int argc, char **argv)
 	//	std::cout << "Sprite Sheet Size: (" << texture.m_SpriteSheetSize.x << ", " << texture.m_SpriteSheetSize.y << ")" << std::endl;
 	//}
 
+	// Draw test for UI
+		// Create transformation matrices for each character
+	glm::mat4 transformP = glm::mat4(1.0f);
+	transformP = glm::translate(transformP, glm::vec3(0.0f, 0.0f, 0.0f)); // Position for 'P'
+
+	glm::mat4 transformL = glm::mat4(1.0f);
+	transformL = glm::translate(transformL, glm::vec3(0.2f, 0.0f, 0.0f)); // Position for 'l'
+
+	glm::mat4 transformA = glm::mat4(1.0f);
+	transformA = glm::translate(transformA, glm::vec3(0.4f, 0.0f, 0.0f)); // Position for 'a'
+
+	glm::mat4 transformY = glm::mat4(1.0f);
+	transformY = glm::translate(transformY, glm::vec3(0.6f, 0.0f, 0.0f)); // Position for 'y'
+
+	glm::mat4 transformE = glm::mat4(1.0f);
+	transformE = glm::translate(transformE, glm::vec3(0.8f, 0.0f, 0.0f)); // Position for 'e'
+
+	glm::mat4 transformR = glm::mat4(1.0f);
+	transformR = glm::translate(transformR, glm::vec3(1.0f, 0.0f, 0.0f)); // Position for 'r'
+
+	// Get the location of the transform uniform
+	GLint transformLoc = glGetUniformLocation(shaderProgram, "transform");
+
 	while (true)
 	{
 		if (SDL_PollEvent(&windowEvent))
@@ -331,10 +358,50 @@ int main(int argc, char **argv)
 		glUniform1i(glGetUniformLocation(shaderProgram, "ourTexture"), 3);
 		glDrawElementsBaseVertex(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, 16);
 
-		// Draw test for UI
+
+		//UI
+		// Draw the characters with their respective transformations
 		fontLarge.Bind(4);
-		glUniform1i(frameIndexLocation, 0);
-		glUniform2fv(spriteSheetSizeLocation, 1, &Background.GetSpriteSheetSize()[0]);
+
+		// Draw 'P'
+		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transformP));
+		glUniform1i(frameIndexLocation, 48); // P, position 48 on the sheet
+		glUniform2fv(spriteSheetSizeLocation, 1, &fontLarge.GetSpriteSheetSize()[0]);
+		glUniform1i(glGetUniformLocation(shaderProgram, "ourTexture"), 4);
+		glDrawElementsBaseVertex(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, 20);
+
+		// Draw 'l'
+		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transformL));
+		glUniform1i(frameIndexLocation, 76); // l, position 76 on the sheet
+		glUniform2fv(spriteSheetSizeLocation, 1, &fontLarge.GetSpriteSheetSize()[0]);
+		glUniform1i(glGetUniformLocation(shaderProgram, "ourTexture"), 4);
+		glDrawElementsBaseVertex(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, 20);
+
+		// Draw 'a'
+		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transformA));
+		glUniform1i(frameIndexLocation, 65); // a, position 65 on the sheet
+		glUniform2fv(spriteSheetSizeLocation, 1, &fontLarge.GetSpriteSheetSize()[0]);
+		glUniform1i(glGetUniformLocation(shaderProgram, "ourTexture"), 4);
+		glDrawElementsBaseVertex(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, 20);
+
+		// Draw 'y'
+		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transformY));
+		glUniform1i(frameIndexLocation, 89); // y, position 89 on the sheet
+		glUniform2fv(spriteSheetSizeLocation, 1, &fontLarge.GetSpriteSheetSize()[0]);
+		glUniform1i(glGetUniformLocation(shaderProgram, "ourTexture"), 4);
+		glDrawElementsBaseVertex(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, 20);
+
+		// Draw 'e'
+		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transformE));
+		glUniform1i(frameIndexLocation, 69); // e, position 69 on the sheet
+		glUniform2fv(spriteSheetSizeLocation, 1, &fontLarge.GetSpriteSheetSize()[0]);
+		glUniform1i(glGetUniformLocation(shaderProgram, "ourTexture"), 4);
+		glDrawElementsBaseVertex(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, 20);
+
+		// Draw 'r'
+		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transformR));
+		glUniform1i(frameIndexLocation, 82); // r, position 82 on the sheet
+		glUniform2fv(spriteSheetSizeLocation, 1, &fontLarge.GetSpriteSheetSize()[0]);
 		glUniform1i(glGetUniformLocation(shaderProgram, "ourTexture"), 4);
 		glDrawElementsBaseVertex(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, 20);
 

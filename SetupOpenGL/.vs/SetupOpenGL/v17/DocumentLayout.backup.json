@@ -46,8 +46,7 @@
               "RelativeToolTip": "SetupOpenGL\\Texture.cpp",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-01-07T19:15:13.27Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-01-07T19:15:13.27Z"
             },
             {
               "$type": "Document",
@@ -55,9 +54,9 @@
               "Title": "SetupOpenGL.cpp",
               "DocumentMoniker": "C:\\Users\\panan\\Documents\\project2\\SetupOpenGL\\SetupOpenGL\\SetupOpenGL.cpp",
               "RelativeDocumentMoniker": "SetupOpenGL\\SetupOpenGL.cpp",
-              "ToolTip": "C:\\Users\\panan\\Documents\\project2\\SetupOpenGL\\SetupOpenGL\\SetupOpenGL.cpp",
-              "RelativeToolTip": "SetupOpenGL\\SetupOpenGL.cpp",
-              "ViewState": "AgIAAFMAAAAAAAAAAAAWwP4AAAAAAAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\panan\\Documents\\project2\\SetupOpenGL\\SetupOpenGL\\SetupOpenGL.cpp*",
+              "RelativeToolTip": "SetupOpenGL\\SetupOpenGL.cpp*",
+              "ViewState": "AgIAAEoBAAAAAAAAAAAmwGkBAAAGAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-12-19T14:27:36.692Z",
               "EditorCaption": ""
