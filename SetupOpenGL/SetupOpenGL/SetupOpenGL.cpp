@@ -69,10 +69,19 @@ int main(int argc, char** argv)
 		 -0.0625f, -0.375f, 0.0f,  1.0f, 1.0f, 0.0f,   0.0f, 1.0f,   // top left
 
 		 //test for UI
-		 0.05f,  0.1f, 0.0f,   1.0f, 1.0f, 1.0f,   1.0f, 1.0f,   // top right
-		 0.05f, -0.05f, 0.0f,   1.0f, 1.0f, 1.0f,   1.0f, 0.0f,   // bottom right
-		 -0.05f, -0.05f, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f, 0.0f,   // bottom left
-		 -0.05f,  0.1f, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f, 1.0f,   // top left
+		0.04f,  0.08f, 0.0f,   1.0f, 1.0f, 1.0f,   1.0f, 1.0f,   // top right
+		0.04f, -0.04f, 0.0f,   1.0f, 1.0f, 1.0f,   1.0f, 0.0f,   // bottom right
+		-0.04f, -0.04f, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f, 0.0f,   // bottom left
+		-0.04f,  0.08f, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f, 1.0f,   // top left
+
+		//test for UI
+		0.04f,  0.04f, 0.0f,   1.0f, 1.0f, 1.0f,   1.0f, 1.0f,   // top right
+		0.04f, -0.04f, 0.0f,   1.0f, 1.0f, 1.0f,   1.0f, 0.0f,   // bottom right
+		-0.04f, -0.04f, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f, 0.0f,   // bottom left
+		-0.04f,  0.04f, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f, 1.0f,   // top left
+
+
+
 
 	};
 
@@ -219,6 +228,7 @@ int main(int argc, char** argv)
 	Texture Background("graphics/galaxy2.bmp", glm::vec2(1.0f, 1.0f));
 	Texture PUDive("graphics/PUDive.bmp", glm::vec2(4.0f, 2.0f));
 	Texture fontLarge("graphics/font16x16.bmp", glm::vec2(8.0f, 12.0f));
+	Texture fontSmall("graphics/font8x8.bmp", glm::vec2(8.0f, 16.0f)); // loads of blank space on sprite
 
 	glUseProgram(shaderProgram);
 
@@ -235,7 +245,10 @@ int main(int argc, char** argv)
 	glUniform1i(textureLocationD, 3); // Texture unit 1 for PUDive
 
 	GLuint textureLocationE = glGetUniformLocation(shaderProgram, "ourTexture");
-	glUniform1i(textureLocationE, 4); // Texture unit UI
+	glUniform1i(textureLocationE, 4); // Texture unit UIlarge
+
+	GLuint textureLocationF = glGetUniformLocation(shaderProgram, "ourTexture");
+	glUniform1i(textureLocationF, 5); // Texture unit UIsmall
 
 	SDL_Event windowEvent;
 	float lastTime = SDL_GetTicks();
@@ -249,24 +262,45 @@ int main(int argc, char** argv)
 	//}
 
 	// Draw test for UI
-		// Create transformation matrices for each character
+
+	//fontLarge
 	glm::mat4 transformP = glm::mat4(1.0f);
-	transformP = glm::translate(transformP, glm::vec3(-0.9f, 0.8f, 0.0f)); // Position for 'P'
-
+	transformP = glm::translate(transformP, glm::vec3(-0.94f, 0.85f, 0.0f)); // Position for 'P'
 	glm::mat4 transformL = glm::mat4(1.0f);
-	transformL = glm::translate(transformL, glm::vec3(-0.82f, 0.8f, 0.0f)); // Position for 'l'
-
+	transformL = glm::translate(transformL, glm::vec3(-0.87f, 0.85f, 0.0f)); // Position for 'l'
 	glm::mat4 transformA = glm::mat4(1.0f);
-	transformA = glm::translate(transformA, glm::vec3(-0.74f, 0.8f, 0.0f)); // Position for 'a'
-
+	transformA = glm::translate(transformA, glm::vec3(-0.79f, 0.85f, 0.0f)); // Position for 'a'
 	glm::mat4 transformY = glm::mat4(1.0f);
-	transformY = glm::translate(transformY, glm::vec3(-0.64f, 0.8f, 0.0f)); // Position for 'y'
-
+	transformY = glm::translate(transformY, glm::vec3(-0.69f, 0.85f, 0.0f)); // Position for 'y'
 	glm::mat4 transformE = glm::mat4(1.0f);
-	transformE = glm::translate(transformE, glm::vec3(-0.54f, 0.8f, 0.0f)); // Position for 'e'
-
+	transformE = glm::translate(transformE, glm::vec3(-0.59f, 0.85f, 0.0f)); // Position for 'e'
 	glm::mat4 transformR = glm::mat4(1.0f);
-	transformR = glm::translate(transformR, glm::vec3(-0.44f, 0.8f, 0.0f)); // Position for 'r'
+	transformR = glm::translate(transformR, glm::vec3(-0.49f, 0.85f, 0.0f)); // Position for 'r'
+
+	glm::mat4 transformO = glm::mat4(1.0f);
+	transformO = glm::translate(transformO, glm::vec3(-0.34f, 0.85f, 0.0f)); // Position for 'O'
+	glm::mat4 transformN = glm::mat4(1.0f);
+	transformN = glm::translate(transformN, glm::vec3(-0.24f, 0.85f, 0.0f)); // Position for 'n'
+	glm::mat4 transformE2 = glm::mat4(1.0f);
+	transformE2 = glm::translate(transformE2, glm::vec3(-0.14f, 0.85f, 0.0f)); // Position for 'e2'
+
+	//fontSmall
+	glm::mat4 transformH = glm::mat4(1.0f);
+	transformH = glm::translate(transformH, glm::vec3(0.45f, 0.9f, 0.0f)); // Position for 'H'
+	glm::mat4 transformI = glm::mat4(1.0f);
+	transformI = glm::translate(transformI, glm::vec3(0.52f, 0.9f, 0.0f)); // Position for 'i'
+
+	glm::mat4 transformS = glm::mat4(1.0f);
+	transformS = glm::translate(transformS, glm::vec3(0.62f, 0.9f, 0.0f)); // Position for 'S'
+	glm::mat4 transformC = glm::mat4(1.0f);
+	transformC = glm::translate(transformC, glm::vec3(0.70f, 0.9f, 0.0f)); // Position for 'c'
+	glm::mat4 transformO2 = glm::mat4(1.0f);
+	transformO2 = glm::translate(transformO2, glm::vec3(0.78f, 0.9f, 0.0f)); // Position for 'o2'
+	glm::mat4 transformR2 = glm::mat4(1.0f);
+	transformR2 = glm::translate(transformR2, glm::vec3(0.86f, 0.9f, 0.0f)); // Position for 'r2'
+	glm::mat4 transformE3 = glm::mat4(1.0f);
+	transformE3 = glm::translate(transformE3, glm::vec3(0.95f, 0.9f, 0.0f)); // Position for 'e3'
+
 
 	// Get the location of the transform uniform
 	GLint transformLoc = glGetUniformLocation(shaderProgram, "transform");
@@ -354,41 +388,102 @@ int main(int argc, char** argv)
 		glUniform2fv(spriteSheetSizeLocation, 1, &fontLarge.GetSpriteSheetSize()[0]);
 		glUniform1i(glGetUniformLocation(shaderProgram, "ourTexture"), 4);
 		glDrawElementsBaseVertex(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, 20);
-
 		// Draw 'l'
 		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transformL));
 		glUniform1i(frameIndexLocation, 76); // l, position 76 on the sheet
 		glUniform2fv(spriteSheetSizeLocation, 1, &fontLarge.GetSpriteSheetSize()[0]);
 		glUniform1i(glGetUniformLocation(shaderProgram, "ourTexture"), 4);
 		glDrawElementsBaseVertex(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, 20);
-
 		// Draw 'a'
 		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transformA));
 		glUniform1i(frameIndexLocation, 65); // a, position 65 on the sheet
 		glUniform2fv(spriteSheetSizeLocation, 1, &fontLarge.GetSpriteSheetSize()[0]);
 		glUniform1i(glGetUniformLocation(shaderProgram, "ourTexture"), 4);
 		glDrawElementsBaseVertex(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, 20);
-
 		// Draw 'y'
 		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transformY));
 		glUniform1i(frameIndexLocation, 89); // y, position 89 on the sheet
 		glUniform2fv(spriteSheetSizeLocation, 1, &fontLarge.GetSpriteSheetSize()[0]);
 		glUniform1i(glGetUniformLocation(shaderProgram, "ourTexture"), 4);
 		glDrawElementsBaseVertex(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, 20);
-
 		// Draw 'e'
 		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transformE));
 		glUniform1i(frameIndexLocation, 69); // e, position 69 on the sheet
 		glUniform2fv(spriteSheetSizeLocation, 1, &fontLarge.GetSpriteSheetSize()[0]);
 		glUniform1i(glGetUniformLocation(shaderProgram, "ourTexture"), 4);
 		glDrawElementsBaseVertex(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, 20);
-
 		// Draw 'r'
 		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transformR));
 		glUniform1i(frameIndexLocation, 82); // r, position 82 on the sheet
 		glUniform2fv(spriteSheetSizeLocation, 1, &fontLarge.GetSpriteSheetSize()[0]);
 		glUniform1i(glGetUniformLocation(shaderProgram, "ourTexture"), 4);
 		glDrawElementsBaseVertex(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, 20);
+
+		// Draw 'O'
+		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transformO));
+		glUniform1i(frameIndexLocation, 47); // O, position 47 on the sheet
+		glUniform2fv(spriteSheetSizeLocation, 1, &fontLarge.GetSpriteSheetSize()[0]);
+		glUniform1i(glGetUniformLocation(shaderProgram, "ourTexture"), 4);
+		glDrawElementsBaseVertex(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, 20);
+		// Draw 'n'
+		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transformN));
+		glUniform1i(frameIndexLocation, 78); // n, position 78 on the sheet
+		glUniform2fv(spriteSheetSizeLocation, 1, &fontLarge.GetSpriteSheetSize()[0]);
+		glUniform1i(glGetUniformLocation(shaderProgram, "ourTexture"), 4);
+		glDrawElementsBaseVertex(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, 20);
+		// Draw 'e2'
+		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transformE2));
+		glUniform1i(frameIndexLocation, 69); // e, position 69 on the sheet
+		glUniform2fv(spriteSheetSizeLocation, 1, &fontLarge.GetSpriteSheetSize()[0]);
+		glUniform1i(glGetUniformLocation(shaderProgram, "ourTexture"), 4);
+		glDrawElementsBaseVertex(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, 20);
+
+
+		fontSmall.Bind(5);
+		// Draw 'H'
+		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transformH));
+		glUniform1i(frameIndexLocation, 40); // H, position 41 on the sheet
+		glUniform2fv(spriteSheetSizeLocation, 1, &fontSmall.GetSpriteSheetSize()[0]);
+		glUniform1i(glGetUniformLocation(shaderProgram, "ourTexture"), 5);
+		glDrawElementsBaseVertex(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, 24);
+		// Draw 'i'
+		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transformI));
+		glUniform1i(frameIndexLocation, 73); // i, position 69 on the sheet
+		glUniform2fv(spriteSheetSizeLocation, 1, &fontSmall.GetSpriteSheetSize()[0]);
+		glUniform1i(glGetUniformLocation(shaderProgram, "ourTexture"), 5);
+		glDrawElementsBaseVertex(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, 24);
+
+		// Draw 'S'
+		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transformS));
+		glUniform1i(frameIndexLocation, 51); // e, position 69 on the sheet
+		glUniform2fv(spriteSheetSizeLocation, 1, &fontSmall.GetSpriteSheetSize()[0]);
+		glUniform1i(glGetUniformLocation(shaderProgram, "ourTexture"), 5);
+		glDrawElementsBaseVertex(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, 24);
+		// Draw 'c'
+		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transformC));
+		glUniform1i(frameIndexLocation, 67); // e, position 69 on the sheet
+		glUniform2fv(spriteSheetSizeLocation, 1, &fontSmall.GetSpriteSheetSize()[0]);
+		glUniform1i(glGetUniformLocation(shaderProgram, "ourTexture"), 5);
+		glDrawElementsBaseVertex(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, 24);
+		// Draw 'o2'
+		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transformO2));
+		glUniform1i(frameIndexLocation, 79); // e, position 69 on the sheet
+		glUniform2fv(spriteSheetSizeLocation, 1, &fontSmall.GetSpriteSheetSize()[0]);
+		glUniform1i(glGetUniformLocation(shaderProgram, "ourTexture"), 5);
+		glDrawElementsBaseVertex(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, 24);
+		// Draw 'r2'
+		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transformR2));
+		glUniform1i(frameIndexLocation, 82); // e, position 69 on the sheet
+		glUniform2fv(spriteSheetSizeLocation, 1, &fontSmall.GetSpriteSheetSize()[0]);
+		glUniform1i(glGetUniformLocation(shaderProgram, "ourTexture"), 5);
+		glDrawElementsBaseVertex(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, 24);
+		// Draw 'e3'
+		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(transformE3));
+		glUniform1i(frameIndexLocation, 69); // e, position 69 on the sheet
+		glUniform2fv(spriteSheetSizeLocation, 1, &fontSmall.GetSpriteSheetSize()[0]);
+		glUniform1i(glGetUniformLocation(shaderProgram, "ourTexture"), 5);
+		glDrawElementsBaseVertex(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, 24);
+
 
 		SDL_GL_SwapWindow(window);
 	}
