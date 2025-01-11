@@ -37,56 +37,54 @@ int main(int argc, char** argv)
 
 
 	float vertices[] = {
-		//	X		Y      Z        R    G    B         S    T
-			// Background
-			1.0f,  1.0f, 0.0f,   1.0f, 1.0f, 1.0f,   1.0f, 1.0f,   // top right
-			1.0f, -1.0f, 0.0f,   1.0f, 1.0f, 1.0f,   1.0f, 0.0f,   // bottom right
-		   -1.0f, -1.0f, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f, 0.0f,   // bottom left
-		   -1.0f,  1.0f, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f, 1.0f,   // top left
+		//	X	  Y      Z        R    G    B         S    T
+		// Background
+		 1.0f,  1.0f, 0.0f,      1.0f, 1.0f, 1.0f,   1.0f, 1.0f,     // top right
+		 1.0f, -1.0f, 0.0f,      1.0f, 1.0f, 1.0f,   1.0f, 0.0f,     // bottom right
+		-1.0f, -1.0f, 0.0f,      1.0f, 1.0f, 1.0f,   0.0f, 0.0f,     // bottom left
+		-1.0f,  1.0f, 0.0f,      1.0f, 1.0f, 1.0f,   0.0f, 1.0f,     // top left
 
-		   // Object 1
-		   0.0f,      0.125f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
-		   0.0f,     -0.125f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
-		  -0.1875f, -0.125f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
-		  -0.1875f,  0.125f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f,   // top left
+		// Object 1
+		 0.0f,     0.125f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
+		 0.0f,    -0.125f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
+		-0.1875f, -0.125f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
+		-0.1875f,  0.125f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f,   // top left
 
-		  // Object 2
-		  -0.1875f,  0.625f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
-		  -0.1875f,  0.375f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
-		  -0.375f,   0.375f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
-		  -0.375f,   0.625f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f,   // top left
+		// Object 2
+		-0.1875f,  0.625f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
+		-0.1875f,  0.375f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
+		-0.375f,   0.375f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
+		-0.375f,   0.625f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f,   // top left
 
-		  // Object 3
-		  -0.375f,  0.125f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
-		  -0.375f, -0.125f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
-		  -0.5625f, -0.125f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
-		  -0.5625f,  0.125f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f,   // top left
+		// Object 3
+		-0.375f,   0.125f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
+		-0.375f,  -0.125f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
+		-0.5625f, -0.125f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
+		-0.5625f,  0.125f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f,   // top left
 
-		  // Object 4
-		  0.125f, -0.375f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
-		  0.125f, -0.625f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
-		 -0.0625f, -0.625f, 0.0f,  0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
-		 -0.0625f, -0.375f, 0.0f,  1.0f, 1.0f, 0.0f,   0.0f, 1.0f,   // top left
-
-		 //test for UI
-		0.04f,  0.08f, 0.0f,   1.0f, 1.0f, 1.0f,   1.0f, 1.0f,   // top right
-		0.04f, -0.04f, 0.0f,   1.0f, 1.0f, 1.0f,   1.0f, 0.0f,   // bottom right
-		-0.04f, -0.04f, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f, 0.0f,   // bottom left
-		-0.04f,  0.08f, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f, 1.0f,   // top left
+		// Object 4
+		 0.125f,  -0.375f, 0.0f,  1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
+		 0.125f,  -0.625f, 0.0f,  0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
+		-0.0625f, -0.625f, 0.0f,  0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
+		-0.0625f, -0.375f, 0.0f,  1.0f, 1.0f, 0.0f,   0.0f, 1.0f,   // top left
 
 		//test for UI
-		0.04f,  0.04f, 0.0f,   1.0f, 1.0f, 1.0f,   1.0f, 1.0f,   // top right
-		0.04f, -0.04f, 0.0f,   1.0f, 1.0f, 1.0f,   1.0f, 0.0f,   // bottom right
-		-0.04f, -0.04f, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f, 0.0f,   // bottom left
-		-0.04f,  0.04f, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f, 1.0f,   // top left
+		 0.04f,  0.08f, 0.0f,   1.0f, 1.0f, 1.0f,   1.0f, 1.0f,     // top right
+		 0.04f, -0.04f, 0.0f,   1.0f, 1.0f, 1.0f,   1.0f, 0.0f,     // bottom right
+		-0.04f, -0.04f, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f, 0.0f,     // bottom left
+		-0.04f,  0.08f, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f, 1.0f,     // top left
+
+		//test for UI
+		 0.04f,  0.04f, 0.0f,   1.0f, 1.0f, 1.0f,   1.0f, 1.0f,     // top right
+		 0.04f, -0.04f, 0.0f,   1.0f, 1.0f, 1.0f,   1.0f, 0.0f,     // bottom right
+		-0.04f, -0.04f, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f, 0.0f,     // bottom left
+		-0.04f,  0.04f, 0.0f,   1.0f, 1.0f, 1.0f,   0.0f, 1.0f,		// top left
 
 		// Rocks
-		  1.5625f, -0.375f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
-		  1.5625f, -0.625f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
-		 0.4375f, -0.625f, 0.0f,  0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
-		 0.4375f, -0.375f, 0.0f,  1.0f, 1.0f, 0.0f,   0.0f, 1.0f,	 // top left
-
-
+		1.5625f, -0.375f, 0.0f,  1.0f, 0.0f, 0.0f,   1.0f, 1.0f,	// top right
+		1.5625f, -0.625f, 0.0f,  0.0f, 1.0f, 0.0f,   1.0f, 0.0f,	// bottom right
+		0.4375f, -0.625f, 0.0f,  0.0f, 0.0f, 1.0f,   0.0f, 0.0f,	// bottom left
+		0.4375f, -0.375f, 0.0f,  1.0f, 1.0f, 0.0f,   0.0f, 1.0f,	// top left
 
 	};
 
@@ -97,11 +95,9 @@ int main(int argc, char** argv)
 
 	};
 
-	GLuint vbo, ebo; // vertex buffer object
+	GLuint vbo, ebo, vao;  // vertex buffer object
 	glGenBuffers(1, &vbo); // Generate 1 buffer
 	glGenBuffers(1, &ebo);
-
-	GLuint vao;
 	glGenVertexArrays(1, &vao);
 
 	// 1. bind Vertex Array Object
@@ -150,7 +146,6 @@ int main(int argc, char** argv)
 	//function above inside void goes through the img file to pick which sprite to draw
 
 	// Vertex Shader
-
 	GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
 	glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
 	glCompileShader(vertexShader);
@@ -166,7 +161,6 @@ int main(int argc, char** argv)
 	}
 
 	// Fragment Shader
-
 	const char* fragmentShaderSource = R"glsl(
 		#version 330 core
 
@@ -270,7 +264,7 @@ int main(int argc, char** argv)
 	//	std::cout << "Sprite Sheet Size: (" << texture.m_SpriteSheetSize.x << ", " << texture.m_SpriteSheetSize.y << ")" << std::endl;
 	//}
 
-	// Draw test for UI
+	// Draw UI
 
 	//fontLarge
 	glm::mat4 transformP = glm::mat4(1.0f);
@@ -366,7 +360,7 @@ int main(int argc, char** argv)
 		Background.Bind(0);
 		glUniform1i(frameIndexLocation, 0); // No animation for background
 		glUniform2fv(spriteSheetSizeLocation, 1, &Background.GetSpriteSheetSize()[0]);
-		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(glm::mat4(1.0f)));
+		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(glm::mat4(1.0f))); //stops the background from moving with glm
 		glUniform1i(glGetUniformLocation(shaderProgram, "ourTexture"), 0);
 		glDrawElementsBaseVertex(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, 0);
 
@@ -384,7 +378,7 @@ int main(int argc, char** argv)
 		LonerA.Bind(0);
 		glUniform1i(frameIndexLocation, frameIndex);
 		glUniform2fv(spriteSheetSizeLocation, 1, &LonerA.GetSpriteSheetSize()[0]);
-		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(glm::mat4(1.0f)));
+		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(glm::mat4(1.0f))); //stops the object from moving with glm
 		glUniform1i(glGetUniformLocation(shaderProgram, "ourTexture"), 0);
 		glDrawElementsBaseVertex(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, 4);
 
@@ -519,11 +513,8 @@ int main(int argc, char** argv)
 		glUniform1i(glGetUniformLocation(shaderProgram, "ourTexture"), 5);
 		glDrawElementsBaseVertex(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, 24);
 
-
 		SDL_GL_SwapWindow(window);
 	}
-
-
 
 	SDL_GL_DeleteContext(context);
 	SDL_DestroyWindow(window);
