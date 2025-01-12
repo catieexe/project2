@@ -86,6 +86,11 @@ int main(int argc, char** argv)
 		0.4375f, -0.625f, 0.0f,  0.0f, 0.0f, 1.0f,   0.0f, 0.0f,	// bottom left
 		0.4375f, -0.375f, 0.0f,  1.0f, 1.0f, 0.0f,   0.0f, 1.0f,	// top left
 
+		// Ship
+		 0.3125f,  -0.375f, 0.0f,  1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
+		 0.3125f,  -0.625f, 0.0f,  0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
+		0.125f, -0.625f, 0.0f,  0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
+		0.125f, -0.375f, 0.0f,  1.0f, 1.0f, 0.0f,   0.0f, 1.0f,   // top left
 	};
 
 	unsigned int indices[] = {
@@ -229,6 +234,7 @@ int main(int argc, char** argv)
 	Texture fontLarge("graphics/font16x16.bmp", glm::vec2(8.0f, 12.0f));
 	Texture fontSmall("graphics/font8x8.bmp", glm::vec2(8.0f, 16.0f)); // loads of blank space on sprite
 	Texture Rocks("graphics/Blocks.bmp", glm::vec2(2.0f, 64.0f));
+	Texture Ship("graphics/Ship1.bmp", glm::vec2(7.0f, 1.0f));
 
 	glUseProgram(shaderProgram);
 
@@ -252,6 +258,9 @@ int main(int argc, char** argv)
 
 	GLuint textureLocationG = glGetUniformLocation(shaderProgram, "ourTexture");
 	glUniform1i(textureLocationG, 6); // Texture unit 6 for Rocks
+
+	GLuint textureLocationH = glGetUniformLocation(shaderProgram, "ourTexture");
+	glUniform1i(textureLocationH, 7); // Texture unit 6 for Ship
 
 	SDL_Event windowEvent;
 	float lastTime = SDL_GetTicks();
@@ -314,12 +323,23 @@ int main(int argc, char** argv)
 	float rockPosition = topPosition; // Initial position
 	bool movingDown = true; // Initial direction
 
+	float alienSpeed = 0.5f; // Speed of the movement
+	float alienLeftPosition = 1.0f; // Left position
+	float alienRightPosition = 0.0f; // Right position
+	float alienPosition = alienRightPosition; // Initial position
+	bool movingLeft = true; // Initial direction
+
+	float shipX = 0.0f;
+	float shipY = -0.5f;
+	float shipSpeed = 0.5f;
+
 	while (true)
 	{
 		if (SDL_PollEvent(&windowEvent))
 		{
 			if (windowEvent.type == SDL_QUIT) break;
 		}
+
 
 		float currentTime = SDL_GetTicks();
 		float deltaTime = (currentTime - lastTime) / 1000.0f;
@@ -330,6 +350,24 @@ int main(int argc, char** argv)
 		static float animationTime = 0.0f;
 		float frameDuration = 1.0f / framesPerSecond;
 		animationTime += deltaTime;
+
+		const Uint8* state = SDL_GetKeyboardState(NULL);
+		if (state[SDL_SCANCODE_W])
+		{
+			shipY += shipSpeed * deltaTime;
+		}
+		if (state[SDL_SCANCODE_S])
+		{
+			shipY -= shipSpeed * deltaTime;
+		}
+		if (state[SDL_SCANCODE_A])
+		{
+			shipX -= shipSpeed * deltaTime;
+		}
+		if (state[SDL_SCANCODE_D])
+		{
+			shipX += shipSpeed * deltaTime;
+		}
 
 		if (animationTime >= frameDuration)
 		{
@@ -344,6 +382,25 @@ int main(int argc, char** argv)
 			{
 				rockPosition = topPosition;
 
+			}
+		}
+
+		if (movingLeft)
+		{
+			alienPosition += alienSpeed * deltaTime;
+			if (alienPosition >= alienLeftPosition)
+			{
+				alienSpeed = -alienSpeed;
+				movingLeft = false;
+			}
+		}
+		else
+		{
+			alienPosition += alienSpeed * deltaTime;
+			if (alienPosition <= alienRightPosition)
+			{
+				alienSpeed = -alienSpeed;
+				movingLeft = true;
 			}
 		}
 
@@ -374,11 +431,14 @@ int main(int argc, char** argv)
 		glUniform1i(glGetUniformLocation(shaderProgram, "ourTexture"), 6);
 		glDrawElementsBaseVertex(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, 28);
 
+		glm::mat4 alienTransform = glm::mat4(1.0f);
+		alienTransform = glm::translate(alienTransform, glm::vec3(alienPosition, 0.0f, 0.0f));
+
 		// Draw Object 1 with LonerA texture
 		LonerA.Bind(0);
 		glUniform1i(frameIndexLocation, frameIndex);
 		glUniform2fv(spriteSheetSizeLocation, 1, &LonerA.GetSpriteSheetSize()[0]);
-		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(glm::mat4(1.0f))); //stops the object from moving with glm
+		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(alienTransform));
 		glUniform1i(glGetUniformLocation(shaderProgram, "ourTexture"), 0);
 		glDrawElementsBaseVertex(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, 4);
 
@@ -398,6 +458,17 @@ int main(int argc, char** argv)
 		glUniform1i(glGetUniformLocation(shaderProgram, "ourTexture"), 2);
 		glDrawElementsBaseVertex(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, 12);
 
+		glm::mat4 shipTransform = glm::mat4(1.0f);
+		shipTransform = glm::translate(shipTransform, glm::vec3(shipX, shipY, 0.0f));
+
+		Ship.Bind(7);
+		glUniform1i(frameIndexLocation, 4);
+		glUniform2fv(spriteSheetSizeLocation, 1, &Ship.GetSpriteSheetSize()[0]);
+		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(shipTransform));
+		glUniform1i(glGetUniformLocation(shaderProgram, "ourTexture"), 7);
+		glDrawElementsBaseVertex(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, 32);
+
+
 		// Draw Object 4 with PUDive texture
 		PUDive.Bind(3);
 		glUniform1i(frameIndexLocation, frameIndex);
@@ -405,6 +476,7 @@ int main(int argc, char** argv)
 		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(glm::mat4(1.0f)));
 		glUniform1i(glGetUniformLocation(shaderProgram, "ourTexture"), 3);
 		glDrawElementsBaseVertex(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, 16);
+
 
 
 		//UI
