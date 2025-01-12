@@ -86,11 +86,18 @@ int main(int argc, char** argv)
 		0.4375f, -0.625f, 0.0f,  0.0f, 0.0f, 1.0f,   0.0f, 0.0f,	// bottom left
 		0.4375f, -0.375f, 0.0f,  1.0f, 1.0f, 0.0f,   0.0f, 1.0f,	// top left
 
+
 		// Ship
 		 0.3125f,  -0.375f, 0.0f,  1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
 		 0.3125f,  -0.625f, 0.0f,  0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
 		0.125f, -0.625f, 0.0f,  0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
 		0.125f, -0.375f, 0.0f,  1.0f, 1.0f, 0.0f,   0.0f, 1.0f,   // top left
+
+		// Rocks 2
+		1.5625f, -0.375f, 0.0f,  1.0f, 0.0f, 0.0f,   1.0f, 1.0f,	// top right
+		1.5625f, -0.625f, 0.0f,  0.0f, 1.0f, 0.0f,   1.0f, 0.0f,	// bottom right
+		0.4375f, -0.625f, 0.0f,  0.0f, 0.0f, 1.0f,   0.0f, 0.0f,	// bottom left
+		0.4375f, -0.375f, 0.0f,  1.0f, 1.0f, 0.0f,   0.0f, 1.0f,	// top left
 	};
 
 	unsigned int indices[] = {
@@ -260,7 +267,10 @@ int main(int argc, char** argv)
 	glUniform1i(textureLocationG, 6); // Texture unit 6 for Rocks
 
 	GLuint textureLocationH = glGetUniformLocation(shaderProgram, "ourTexture");
-	glUniform1i(textureLocationH, 7); // Texture unit 6 for Ship
+	glUniform1i(textureLocationH, 7); // Texture unit 7 for Ship
+
+	GLuint textureLocationI = glGetUniformLocation(shaderProgram, "ourTexture");
+	glUniform1i(textureLocationI, 8); // Texture unit 8 for Rocks 2
 
 	SDL_Event windowEvent;
 	float lastTime = SDL_GetTicks();
@@ -318,10 +328,15 @@ int main(int argc, char** argv)
 	GLint transformLoc = glGetUniformLocation(shaderProgram, "transform");
 
 	float rockSpeed = 0.5f; // Speed of the movement
-	float topPosition = 1.5f; // Top position
-	float bottomPosition = -1.5f; // Bottom position
-	float rockPosition = topPosition; // Initial position
-	bool movingDown = true; // Initial direction
+	float top1Position = 1.5f; // Top position for rock 1
+	float bottom1Position = -1.5f; // Bottom position for rock 1
+	float rock1Position = top1Position; // Initial position for rock 1
+	bool moving1Down = true; // Initial direction for rock 1
+
+	float top2Position = 1.5f; // Top position for rock 2
+	float bottom2Position = -1.5f; // Bottom position for rock 2
+	float rock2Position = 0; // Initial position for rock 2
+	bool moving2Down = true; // Initial direction for rock 2
 
 	float alienSpeed = 0.5f; // Speed of the movement
 	float alienLeftPosition = 1.0f; // Left position
@@ -375,12 +390,22 @@ int main(int argc, char** argv)
 			animationTime -= frameDuration;
 		}
 
-		if (movingDown)
+		if (moving1Down)
 		{
-			rockPosition -= rockSpeed * deltaTime;
-			if (rockPosition <= bottomPosition)
+			rock1Position -= rockSpeed * deltaTime;
+			if (rock1Position <= bottom1Position)
 			{
-				rockPosition = topPosition;
+				rock1Position = top1Position;
+
+			}
+		}
+
+		if (moving2Down)
+		{
+			rock2Position -= rockSpeed * deltaTime;
+			if (rock2Position <= bottom2Position)
+			{
+				rock2Position = top2Position;
 
 			}
 		}
@@ -421,15 +446,26 @@ int main(int argc, char** argv)
 		glUniform1i(glGetUniformLocation(shaderProgram, "ourTexture"), 0);
 		glDrawElementsBaseVertex(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, 0);
 
-		glm::mat4 rockTransform = glm::mat4(1.0f);
-		rockTransform = glm::translate(rockTransform, glm::vec3(0.0f, rockPosition, 0.0f));
+		glm::mat4 rock1Transform = glm::mat4(1.0f);
+		rock1Transform = glm::translate(rock1Transform, glm::vec3(0.0f, rock1Position, 0.0f));
 
 		Rocks.Bind(6);
 		glUniform1i(frameIndexLocation, 101); // No animation for Rocks
 		glUniform2fv(spriteSheetSizeLocation, 1, &Rocks.GetSpriteSheetSize()[0]);
-		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(rockTransform));
+		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(rock1Transform));
 		glUniform1i(glGetUniformLocation(shaderProgram, "ourTexture"), 6);
 		glDrawElementsBaseVertex(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, 28);
+
+		glm::mat4 rock2Transform = glm::mat4(1.0f);
+		rock2Transform = glm::translate(rock2Transform, glm::vec3(0.0f, rock2Position, 0.0f));
+
+		Rocks.Bind(8);
+		glUniform1i(frameIndexLocation, 101); // No animation for Rocks
+		glUniform2fv(spriteSheetSizeLocation, 1, &Rocks.GetSpriteSheetSize()[0]);
+		glm::mat4 flipTransform = glm::scale(rock2Transform, glm::vec3(-1.0f, 1.0f, 1.0f));
+		glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(flipTransform));
+		glUniform1i(glGetUniformLocation(shaderProgram, "ourTexture"), 6);
+		glDrawElementsBaseVertex(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0, 36);
 
 		glm::mat4 alienTransform = glm::mat4(1.0f);
 		alienTransform = glm::translate(alienTransform, glm::vec3(alienPosition, 0.0f, 0.0f));

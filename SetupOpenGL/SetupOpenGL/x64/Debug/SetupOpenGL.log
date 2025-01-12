@@ -1,4 +1,4 @@
 ﻿  SetupOpenGL.cpp
-C:\UNI\3rd Year\Computer Graphics\Projeto\Project\projeto\project2\SetupOpenGL\SetupOpenGL\SetupOpenGL.cpp(266,17): warning C4244: 'initializing': conversion from 'Uint32' to 'float', possible loss of data
-C:\UNI\3rd Year\Computer Graphics\Projeto\Project\projeto\project2\SetupOpenGL\SetupOpenGL\SetupOpenGL.cpp(344,21): warning C4244: 'initializing': conversion from 'Uint32' to 'float', possible loss of data
+C:\UNI\3rd Year\Computer Graphics\Projeto\Project\projeto\project2\SetupOpenGL\SetupOpenGL\SetupOpenGL.cpp(276,17): warning C4244: 'initializing': conversion from 'Uint32' to 'float', possible loss of data
+C:\UNI\3rd Year\Computer Graphics\Projeto\Project\projeto\project2\SetupOpenGL\SetupOpenGL\SetupOpenGL.cpp(359,21): warning C4244: 'initializing': conversion from 'Uint32' to 'float', possible loss of data
   SetupOpenGL.vcxproj -> C:\UNI\3rd Year\Computer Graphics\Projeto\Project\projeto\project2\SetupOpenGL\x64\Debug\SetupOpenGL.exe
