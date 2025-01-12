@@ -1,17 +1,17 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\UNI\\3rd Year\\Computer Graphics\\Projeto\\Project\\projeto\\project2\\SetupOpenGL\\",
+  "WorkspaceRootPath": "C:\\Users\\panan\\Documents\\project2\\SetupOpenGL\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{3726605A-83ED-49B9-A1C6-5AB52E9671C3}|SetupOpenGL\\SetupOpenGL.vcxproj|C:\\UNI\\3rd Year\\Computer Graphics\\Projeto\\Project\\projeto\\project2\\SetupOpenGL\\SetupOpenGL\\SetupOpenGL.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{3726605A-83ED-49B9-A1C6-5AB52E9671C3}|SetupOpenGL\\SetupOpenGL.vcxproj|C:\\Users\\panan\\Documents\\project2\\SetupOpenGL\\SetupOpenGL\\SetupOpenGL.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{3726605A-83ED-49B9-A1C6-5AB52E9671C3}|SetupOpenGL\\SetupOpenGL.vcxproj|solutionrelative:SetupOpenGL\\SetupOpenGL.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3726605A-83ED-49B9-A1C6-5AB52E9671C3}|SetupOpenGL\\SetupOpenGL.vcxproj|C:\\UNI\\3rd Year\\Computer Graphics\\Projeto\\Project\\projeto\\project2\\SetupOpenGL\\SetupOpenGL\\Texture.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{3726605A-83ED-49B9-A1C6-5AB52E9671C3}|SetupOpenGL\\SetupOpenGL.vcxproj|C:\\Users\\panan\\Documents\\project2\\SetupOpenGL\\SetupOpenGL\\Texture.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{3726605A-83ED-49B9-A1C6-5AB52E9671C3}|SetupOpenGL\\SetupOpenGL.vcxproj|solutionrelative:SetupOpenGL\\Texture.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3726605A-83ED-49B9-A1C6-5AB52E9671C3}|SetupOpenGL\\SetupOpenGL.vcxproj|C:\\UNI\\3rd Year\\Computer Graphics\\Projeto\\Project\\projeto\\project2\\SetupOpenGL\\SetupOpenGL\\Texture.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{3726605A-83ED-49B9-A1C6-5AB52E9671C3}|SetupOpenGL\\SetupOpenGL.vcxproj|C:\\Users\\panan\\Documents\\project2\\SetupOpenGL\\SetupOpenGL\\Texture.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{3726605A-83ED-49B9-A1C6-5AB52E9671C3}|SetupOpenGL\\SetupOpenGL.vcxproj|solutionrelative:SetupOpenGL\\Texture.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
@@ -28,9 +28,9 @@
               "$type": "Document",
               "DocumentIndex": 2,
               "Title": "Texture.h",
-              "DocumentMoniker": "C:\\UNI\\3rd Year\\Computer Graphics\\Projeto\\Project\\projeto\\project2\\SetupOpenGL\\SetupOpenGL\\Texture.h",
+              "DocumentMoniker": "C:\\Users\\panan\\Documents\\project2\\SetupOpenGL\\SetupOpenGL\\Texture.h",
               "RelativeDocumentMoniker": "SetupOpenGL\\Texture.h",
-              "ToolTip": "C:\\UNI\\3rd Year\\Computer Graphics\\Projeto\\Project\\projeto\\project2\\SetupOpenGL\\SetupOpenGL\\Texture.h",
+              "ToolTip": "C:\\Users\\panan\\Documents\\project2\\SetupOpenGL\\SetupOpenGL\\Texture.h",
               "RelativeToolTip": "SetupOpenGL\\Texture.h",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
@@ -40,9 +40,9 @@
               "$type": "Document",
               "DocumentIndex": 1,
               "Title": "Texture.cpp",
-              "DocumentMoniker": "C:\\UNI\\3rd Year\\Computer Graphics\\Projeto\\Project\\projeto\\project2\\SetupOpenGL\\SetupOpenGL\\Texture.cpp",
+              "DocumentMoniker": "C:\\Users\\panan\\Documents\\project2\\SetupOpenGL\\SetupOpenGL\\Texture.cpp",
               "RelativeDocumentMoniker": "SetupOpenGL\\Texture.cpp",
-              "ToolTip": "C:\\UNI\\3rd Year\\Computer Graphics\\Projeto\\Project\\projeto\\project2\\SetupOpenGL\\SetupOpenGL\\Texture.cpp",
+              "ToolTip": "C:\\Users\\panan\\Documents\\project2\\SetupOpenGL\\SetupOpenGL\\Texture.cpp",
               "RelativeToolTip": "SetupOpenGL\\Texture.cpp",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
@@ -52,9 +52,9 @@
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "SetupOpenGL.cpp",
-              "DocumentMoniker": "C:\\UNI\\3rd Year\\Computer Graphics\\Projeto\\Project\\projeto\\project2\\SetupOpenGL\\SetupOpenGL\\SetupOpenGL.cpp",
+              "DocumentMoniker": "C:\\Users\\panan\\Documents\\project2\\SetupOpenGL\\SetupOpenGL\\SetupOpenGL.cpp",
               "RelativeDocumentMoniker": "SetupOpenGL\\SetupOpenGL.cpp",
-              "ToolTip": "C:\\UNI\\3rd Year\\Computer Graphics\\Projeto\\Project\\projeto\\project2\\SetupOpenGL\\SetupOpenGL\\SetupOpenGL.cpp",
+              "ToolTip": "C:\\Users\\panan\\Documents\\project2\\SetupOpenGL\\SetupOpenGL\\SetupOpenGL.cpp",
               "RelativeToolTip": "SetupOpenGL\\SetupOpenGL.cpp",
               "ViewState": "AgIAAEEBAAAAAAAAAAAwwFEBAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",

@@ -1,4 +1,9 @@
-﻿  SetupOpenGL.cpp
-C:\UNI\3rd Year\Computer Graphics\Projeto\Project\projeto\project2\SetupOpenGL\SetupOpenGL\SetupOpenGL.cpp(276,17): warning C4244: 'initializing': conversion from 'Uint32' to 'float', possible loss of data
-C:\UNI\3rd Year\Computer Graphics\Projeto\Project\projeto\project2\SetupOpenGL\SetupOpenGL\SetupOpenGL.cpp(359,21): warning C4244: 'initializing': conversion from 'Uint32' to 'float', possible loss of data
-  SetupOpenGL.vcxproj -> C:\UNI\3rd Year\Computer Graphics\Projeto\Project\projeto\project2\SetupOpenGL\x64\Debug\SetupOpenGL.exe
+﻿  glad.c
+  SetupOpenGL.cpp
+C:\Users\panan\Documents\project2\SetupOpenGL\SetupOpenGL\SetupOpenGL.cpp(276,17): warning C4244: 'initializing': conversion from 'Uint32' to 'float', possible loss of data
+C:\Users\panan\Documents\project2\SetupOpenGL\SetupOpenGL\SetupOpenGL.cpp(359,21): warning C4244: 'initializing': conversion from 'Uint32' to 'float', possible loss of data
+  stb_image.cpp
+  Texture.cpp
+  Generating Code...
+  LINK : C:\Users\panan\Documents\project2\SetupOpenGL\x64\Debug\SetupOpenGL.exe not found or not built by the last incremental link; performing full link
+  SetupOpenGL.vcxproj -> C:\Users\panan\Documents\project2\SetupOpenGL\x64\Debug\SetupOpenGL.exe
